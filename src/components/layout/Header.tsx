@@ -27,7 +27,7 @@ export default function Header({ header }: Header) {
     },
   };
   return (
-    <nav className={cn('w-full h-[82px] flex bg-transparent ', header)}>
+    <nav className={cn('w-full h-[82px] flex bg-transparent z-10 ', header)}>
       <div className='flex justify-between w-full'>
         <motion.div
           initial='hidden2'

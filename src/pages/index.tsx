@@ -1,6 +1,5 @@
 import ArrowButton from '@/components/button/ArrowButton';
 import Layout from '@/components/layout/Layout';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { easeInOut, motion } from 'framer-motion';
 import withAuth from '@/components/hoc/withAuth';
@@ -16,7 +15,6 @@ const CardCarousel = dynamic(
 );
 export default withAuth(Home, 'optional');
 function Home() {
-  const router = useRouter();
   const animation = {
     hidden: {
       transition: { ease: easeInOut, duration: 1 },
@@ -135,16 +133,6 @@ function Home() {
               <ArrowButton className='bg-yellow-200' href='/auth'>
                 Register
               </ArrowButton>
-              <button
-                onClick={() =>
-                  router.push(
-                    '/competition/registration?competition=bola-voli',
-                    '/competition/registration',
-                  )
-                }
-              >
-                daftar
-              </button>
             </div>
           </div>
 
@@ -158,7 +146,7 @@ function Home() {
               cards={cards}
               height='600px'
               margin='0 auto'
-              width='100%'
+              width='90%'
               offset={2}
               showArrows={false}
             />

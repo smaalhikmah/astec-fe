@@ -73,3 +73,48 @@ export const step3 = z.object({
     message: 'Only 2 pembimbing are allowed.',
   }),
 });
+
+// talkshow
+
+export const talkshow = z.object({
+  nama: z
+    .string({
+      required_error: 'Nama wajib diisi',
+    })
+    .min(2, {
+      message: 'Nama wajib diisi',
+    }),
+  email: z
+    .string({
+      required_error: 'Email wajib diisi',
+    })
+    .email(),
+  nomor: z.string().optional(),
+  jenisKelamin: z
+    .string({
+      required_error: 'Jenis kelamin wajib diisi',
+    })
+    .min(2, {
+      message: 'Jenis kelamin wajib diisi',
+    }),
+  metode: z.string({
+    required_error: 'Metode wajib diisi',
+  }),
+  kodePromo: z.string().optional(),
+  jumlahTiket: z
+    .number({
+      required_error: 'Jumlah tiket wajib diisi',
+    })
+    .min(1, {
+      message: 'Jumlah tiket minimal 1',
+    }),
+  bukti: z
+    .any()
+    .refine((files) => {
+      return files?.[0]?.size <= MAX_FILE_SIZE;
+    }, `Max image size is 5MB.`)
+    .refine(
+      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
+      'Only .jpg, .jpeg, .png and .webp formats are supported.',
+    ),
+});
