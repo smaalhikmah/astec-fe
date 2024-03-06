@@ -13,7 +13,7 @@ export default function Cards() {
   const router = useRouter();
   return (
     <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] shadow-lg rounded-lg overflow-hidden'>
-      <Card className='h-full bg-white p-0'>
+      <Card className='h-full p-0'>
         <CardHeader>
           <div>
             <Image src='/images/hero.jpg' alt='hero' width={400} height={300} />

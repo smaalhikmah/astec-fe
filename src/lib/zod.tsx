@@ -19,7 +19,7 @@ export const step1 = z.object({
     .any()
     .refine((files) => {
       return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Max image size is 5MB.`)
+    }, `Maksimal 1MB aja yaa.`)
     .refine(
       (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
       'Only .jpg, .jpeg, .png and .webp formats are supported.',
@@ -28,7 +28,7 @@ export const step1 = z.object({
     .any()
     .refine((files) => {
       return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Max image size is 5MB.`)
+    }, `Maksimal 1MB aja yaa.`)
     .refine(
       (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
       'Only .jpg, .jpeg, .png and .webp formats are supported.',
@@ -45,7 +45,7 @@ export const step2 = z.object({
         .any()
         .refine((files) => {
           return files?.[0]?.size <= MAX_FILE_SIZE;
-        }, `Max image size is 5MB.`)
+        }, `Maksimal 1MB aja yaa.`)
         .refine(
           (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
           'Only .jpg, .jpeg, .png and .webp formats are supported.',
@@ -54,7 +54,7 @@ export const step2 = z.object({
         .any()
         .refine((files) => {
           return files?.[0]?.size <= MAX_FILE_SIZE;
-        }, `Max image size is 5MB.`)
+        }, `Maksimal 1MB aja yaa.`)
         .refine(
           (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
           'Only .jpg, .jpeg, .png and .webp formats are supported.',
@@ -109,7 +109,7 @@ export const talkshows = z.object({
     .any()
     .refine((files) => {
       return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Max image size is 5MB.`)
+    }, `Maksimal 1MB aja yaa.`)
     .refine(
       (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
       'Only .jpg, .jpeg, .png and .webp formats are supported.',

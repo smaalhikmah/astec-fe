@@ -5,6 +5,7 @@ import { easeInOut, motion } from 'framer-motion';
 import withAuth from '@/components/hoc/withAuth';
 
 import Cards from '@/components/carousel/Card';
+import Seo from '@/components/Seo';
 const CardCarousel = dynamic(
   () => import('@/components/carousel/CardCarousel'),
   {
@@ -108,7 +109,8 @@ function Home() {
     },
   ];
   return (
-    <Layout header='fixed'>
+    <Layout header='fixed' className='text-white dark:text-black'>
+      <Seo templateTitle='Home' />
       <div className='min-h-screen md:h-screen w-full hero relative overflow-hidden'>
         <div className='layout pt-20 space-y-10 md:space-y-0 md:pt-0 h-full flex flex-col justify-center items-center md:flex-row'>
           <div className='flex h-full w-full md:w-1/2 flex-col justify-center space-y-2'>
@@ -131,7 +133,7 @@ function Home() {
             </div>
 
             <div>
-              <p className='text-white h3'>
+              <p className='h3 text-white dark:text-black'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
                 tempora expedita dolor eligendi perspiciatis, reiciendis
                 cupiditate unde soluta animi maxime dolores, atque modi hic

@@ -5,6 +5,7 @@ import ProfilButton from '../button/ProfilButton';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import useAuthStore from '@/store/useAuthStore';
+import ThemeButton from '../button/ThemeButton';
 
 interface Header {
   header?: string;
@@ -51,7 +52,7 @@ export default function Header({ header, className }: Header) {
             />
           </div>
           <div className='flex items-end justify-center '>
-            <ul className='text-black h4 font-bold flex justify-center space-x-4 items-center '>
+            <ul className=' h4 font-bold flex justify-center space-x-4 items-center '>
               {links.map(({ href, label }) => (
                 <li key={`${href}${label}`}>
                   <Links href={href}>{label}</Links>
@@ -67,6 +68,7 @@ export default function Header({ header, className }: Header) {
           variants={animation}
           className='flex items-center '
         >
+          <ThemeButton />
           {user ? (
             <ProfilButton className='bg-yellow-900' href='/profil'>
               {user?.name || user?.email}

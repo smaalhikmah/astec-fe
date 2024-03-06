@@ -4,11 +4,13 @@ import React from 'react';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
+import Seo from '@/components/Seo';
 
 export default function Index() {
   const router = useRouter();
   return (
-    <Layout className='bg-black'>
+    <Layout header='sticky'>
+      <Seo templateTitle='Talkshow' />
       <main>
         <section className=''>
           <div className='layout'>

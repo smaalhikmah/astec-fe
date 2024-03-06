@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { StepOneData } from '@/types/form';
 import ImagePreview from '@/components/form/ImagePreview';
 import withAuth from '@/components/hoc/withAuth';
+import Seo from '@/components/Seo';
 
 export default withAuth(Registration, 'optional');
 function Registration() {
@@ -63,7 +64,8 @@ function Registration() {
   }, [form, stepOne]);
 
   return (
-    <Layout header='sticky' className='bg-black'>
+    <Layout header='sticky'>
+      <Seo templateTitle='Pendaftaran' />
       <div className='layout w-full flex justify-center items-center flex-col'>
         <div>
           <p className='h1 '>Daftar Ketua</p>

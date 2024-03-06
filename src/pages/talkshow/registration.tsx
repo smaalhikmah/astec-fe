@@ -77,7 +77,7 @@ function Registration() {
     }
   }, [form]);
   return (
-    <Layout className='bg-black' header='sticky'>
+    <Layout header='sticky'>
       <div className='layout flex justify-center items-center flex-col'>
         <div>
           <p className='h1 '>Form pendaftaran talkshow</p>

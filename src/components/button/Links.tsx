@@ -10,7 +10,7 @@ const Links: react.FC<Myprops> = ({ children, href, ...rest }) => {
       <a
         href={href}
         {...rest}
-        className='text-center text-white md:h1 hover:text-green-200'
+        className='text-center md:h1 hover:text-green-200'
       >
         {children}
       </a>

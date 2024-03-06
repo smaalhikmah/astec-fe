@@ -113,7 +113,8 @@
   * {
     @apply border-border;
   }
-  .hero {
+
+  .dark .hero {
     background-image: linear-gradient(
         90deg,
         rgba(2, 0, 36, 1) 0%,
@@ -121,5 +122,9 @@
         rgba(0, 97, 45, 0.4375875350140056) 100%
       ),
       url('/images/hero.jpg');
+  }
+
+  .light .hero {
+    background-image: url('/images/hero.jpg');
   }
 }

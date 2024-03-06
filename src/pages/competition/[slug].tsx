@@ -1,16 +1,25 @@
 import Layout from '@/components/layout/Layout';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
+import withAuth from '@/components/hoc/withAuth';
+import useAuthStore from '@/store/useAuthStore';
+import { Skeleton } from '@/components/ui/skeleton';
+import Seo from '@/components/Seo';
 
-export default function Index() {
+export default withAuth(Index, 'optional');
+function Index() {
+  const { user } = useAuthStore();
+  const { query } = useRouter();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   return (
-    <Layout className='bg-black'>
+    <Layout>
+      <Seo templateTitle={query.slug?.toString()} />
       <main>
-        <section className=''>
+        <section className='mt-5'>
           <div className='layout'>
             <Image
               src='/images/hero.jpg'
@@ -18,7 +27,13 @@ export default function Index() {
               height={300}
               width={1200}
               className='rounded-lg'
+              onLoadingComplete={() => setLoading(false)}
             />
+            {loading && (
+              <div className='flex items-center justify-center h-[300px]'>
+                <Skeleton className='w-full h-full' />
+              </div>
+            )}
             <h1 className='mt-8 text-4xl font-bold'>Lomba futsal</h1>
             <time dateTime='2020-12-12' className='text-sm text-slate-600'>
               {format(parseISO('2020-12-12'), 'LLLL d, yyyy')}
@@ -55,28 +70,38 @@ export default function Index() {
               </article>
 
               <div className='py-4 text-justify'>
-                <div className='md:sticky top-36 md:flex md:flex-col space-y-2'>
-                  <Image
-                    src='/images/hero.jpg'
-                    alt='Competition Banner'
-                    height={200}
-                    width={200}
-                    className='rounded-lg'
-                  />
-                  <p>
+                <div className='md:sticky top-36 md:flex md:flex-col space-y-2 '>
+                  <div className='flex justify-center items-center'>
+                    <Image
+                      src='/images/hero.jpg'
+                      alt='Competition Banner'
+                      height={200}
+                      width={200}
+                      className='rounded-lg'
+                    />
+                  </div>
+
+                  <div className='flex flex-col text-center'>
                     <strong>Guide Book</strong>
+                    <Button variant='default'>Download</Button>
                     <br />
-                    <span className='text-sm text-gray-600 dark:text-gray-300'>
+                    <span className='text-sm text-gray-600 dark:text-gray-300 text-justify'>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos quidem, voluptas, quibusdam, doloremque, voluptates
                       exercitationem delectus nemo quae quia quod fuga
                       dignissimos repellendus. Quisquam, quos, voluptate, quod,
                       nesciunt consequuntur.
                     </span>
-                  </p>
+                  </div>
 
                   <p className='italic'>contact person : 99786696986</p>
+                  {!user && (
+                    <p className='italic text-red-700 font-bold animate-pulse'>
+                      Login untuk mendaftar
+                    </p>
+                  )}
                   <Button
+                    disabled={!user}
                     variant='default'
                     onClick={() => {
                       router.push(
