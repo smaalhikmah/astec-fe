@@ -76,7 +76,7 @@ export const step3 = z.object({
 
 // talkshow
 
-export const talkshow = z.object({
+const talkshow = z.object({
   nama: z
     .string({
       required_error: 'Nama wajib diisi',
@@ -88,7 +88,9 @@ export const talkshow = z.object({
     .string({
       required_error: 'Email wajib diisi',
     })
-    .email(),
+    .email({
+      message: 'Email tidak valid',
+    }),
   nomor: z.string().optional(),
   jenisKelamin: z
     .string({
@@ -97,18 +99,13 @@ export const talkshow = z.object({
     .min(2, {
       message: 'Jenis kelamin wajib diisi',
     }),
-  metode: z.string({
-    required_error: 'Metode wajib diisi',
-  }),
+
   kodePromo: z.string().optional(),
-  jumlahTiket: z
-    .number({
-      required_error: 'Jumlah tiket wajib diisi',
-    })
-    .min(1, {
-      message: 'Jumlah tiket minimal 1',
-    }),
-  bukti: z
+});
+
+export const talkshows = z.object({
+  data_diri: z.array(talkshow),
+  bukti_tf: z
     .any()
     .refine((files) => {
       return files?.[0]?.size <= MAX_FILE_SIZE;
