@@ -18,11 +18,12 @@ import { step1 } from '@/lib/zod';
 import useFormStore from '@/store/useFormStore';
 import { useRouter } from 'next/router';
 import { StepOneData } from '@/types/form';
-import ImagePreview from '@/components/form/NextJsImage';
+import ImagePreview from '@/components/form/ImagePreview';
 import withAuth from '@/components/hoc/withAuth';
 
 export default withAuth(Registration, 'optional');
 function Registration() {
+  const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState({
     scan: null as File | null,
     foto: null as File | null,
@@ -164,11 +165,15 @@ function Registration() {
             `}
             >
               {selectedImage.scan ? (
-                <ImagePreview image={selectedImage?.scan} />
+                <ImagePreview
+                  open={open}
+                  setOpen={setOpen}
+                  url={URL.createObjectURL(selectedImage.scan)}
+                />
               ) : (
-                <div className='inline-flex items-center justify-between'>
+                <div className='flex items-center justify-between'>
                   <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                    <FaImage className='text-2xl' />
+                    <FaImage size={40} />
                   </div>
                 </div>
               )}
@@ -209,7 +214,11 @@ function Registration() {
             `}
             >
               {selectedImage.foto ? (
-                <ImagePreview image={selectedImage?.foto} />
+                <ImagePreview
+                  open={open}
+                  setOpen={setOpen}
+                  url={URL.createObjectURL(selectedImage.foto)}
+                />
               ) : (
                 <div className='inline-flex items-center justify-between'>
                   <div className='p-3 bg-slate-200  justify-center items-center flex'>
