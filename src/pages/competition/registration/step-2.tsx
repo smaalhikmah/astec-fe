@@ -18,7 +18,8 @@ import { step2 } from '@/lib/zod';
 import useFormStore from '@/store/useFormStore';
 import { useRouter } from 'next/router';
 import { StepTwoData } from '@/types/form';
-import ImagePreview from '@/components/form/NextJsImage';
+import ImagePreview from '@/components/form/ImagePreview';
+
 import {
   Accordion,
   AccordionContent,
@@ -28,6 +29,8 @@ import {
 import toast from 'react-hot-toast';
 
 export default function StepTwo() {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [open, setOpen] = useState(false);
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const router = useRouter();
@@ -146,7 +149,11 @@ export default function StepTwo() {
             `}
           >
             {stepTwo ? (
-              <ImagePreview image={stepTwo?.anggota[0].scanKartuPelajar[0]} />
+              <ImagePreview
+                open={open}
+                setOpen={setOpen}
+                url={URL.createObjectURL(stepTwo.anggota[i].foto as File)}
+              />
             ) : (
               <div className='inline-flex items-center justify-between'>
                 <div className='p-3 bg-slate-200  justify-center items-center flex'>
