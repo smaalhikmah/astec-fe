@@ -14,11 +14,11 @@ export default function Header({ header }: Header) {
   const { user } = useAuthStore();
   const animation = {
     hidden: {
-      x: '200%',
+      x: '200',
       transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.85 },
     },
     hidden2: {
-      x: '-200%',
+      x: '-200',
       transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.85 },
     },
     visible: {
@@ -27,7 +27,12 @@ export default function Header({ header }: Header) {
     },
   };
   return (
-    <nav className={cn('w-full h-[82px] flex bg-transparent z-10 ', header)}>
+    <nav
+      className={cn(
+        'w-full h-[82px] flex bg-transparent z-10 overflow-hidden ',
+        header,
+      )}
+    >
       <div className='flex justify-between w-full'>
         <motion.div
           initial='hidden2'

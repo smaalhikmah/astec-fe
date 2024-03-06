@@ -43,30 +43,42 @@ const AuthForm = () => {
       password: '',
       img_url: '',
     },
+    mode: 'onTouched',
   });
 
-  async function getImgUrl(files: FileList | null) {
-    const formData = new FormData();
+  // async function getImgUrl(files: FileList | null) {
+  //   const formData = new FormData();
 
-    if (files) {
-      formData.append('img', files[0]);
-      const res = await api.post('image/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Accept: 'application/json',
-        },
-      });
-      form.setValue('img_url', res.data.img_url);
-    }
-  }
+  //   if (files) {
+  //     formData.append('img', files[0]);
+  //     const res = await api.post('image/upload', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //         Accept: 'application/json',
+  //       },
+  //     });
+  //     form.setValue('img_url', res.data.img_url);
+  //   }
+  // }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
+    const form = new FormData();
+    form.append('email', data.email);
+    form.append('password', data.password);
+    form.append('name', data.name);
+    form.append('image_profile', data.img_url[0]);
     let tempToken: string;
     if (variant === 'REGISTER') {
       toast.promise(
-        api.post(`auth/register`, data).then((res) => {
-          setVariant('LOGIN');
-        }),
+        api
+          .post(`auth/register`, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            setVariant('LOGIN');
+          }),
         {
           ...DEFAULT_TOAST_MESSAGE,
           success: 'Account Successfully Created',
@@ -79,7 +91,7 @@ const AuthForm = () => {
           .post(`auth/login`, data)
           .then((res) => {
             setIsLoading(false);
-            const token = res.data.token;
+            const token = res.data.data.token;
             tempToken = token;
             localStorage.setItem('token', token);
             return api.get('auth/me');
@@ -119,7 +131,7 @@ const AuthForm = () => {
                     <FormItem>
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder='shadcn' {...field} />
+                        <Input placeholder='naruto' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -147,7 +159,7 @@ const AuthForm = () => {
                 <FormItem>
                   <FormLabel>password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='shadcn' {...field} />
+                    <Input type='password' placeholder='****' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -160,6 +172,7 @@ const AuthForm = () => {
                 name='img_url'
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel>Foto Profil</FormLabel>
                     <FormControl>
                       <Input
                         type='file'
@@ -168,7 +181,6 @@ const AuthForm = () => {
                         name={field.name}
                         onChange={(e) => {
                           field.onChange(e.target.files);
-                          getImgUrl(e.target.files);
                         }}
                         ref={field.ref}
                       />

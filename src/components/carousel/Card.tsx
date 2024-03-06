@@ -12,16 +12,18 @@ import { useRouter } from 'next/router';
 export default function Cards() {
   const router = useRouter();
   return (
-    <div className='w-[350px] h-[550px]shadow-lg rounded-lg '>
-      <Card className='h-full bg-white'>
+    <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] shadow-lg rounded-lg overflow-hidden'>
+      <Card className='h-full bg-white p-0'>
         <CardHeader>
-          <Image src='/images/hero.jpg' alt='hero' width={400} height={300} />
+          <div>
+            <Image src='/images/hero.jpg' alt='hero' width={400} height={300} />
+          </div>
           <CardTitle>
-            <p className='text-3xl font-bold'>Judul</p>
+            <p className='h2 font-bold'>Judul</p>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className='text-lg text-gray-500'>
+          <p className='h3 text-gray-500'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>

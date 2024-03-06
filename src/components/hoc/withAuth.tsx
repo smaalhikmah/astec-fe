@@ -7,6 +7,7 @@ import useAuthStore from '@/store/useAuthStore';
 import { User } from '@/types/auth';
 import { getFromLocalStorage } from '../../lib/helper';
 import api from '@/lib/axios-helper';
+import { ApiReturn } from '@/types/api';
 
 export interface WithAuthProps {
   user: User;
@@ -71,11 +72,9 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
       }
       const loadUser = async () => {
         try {
-          // const res = await api.get<ApiReturn<User>>('/auth/me');
-          const res = await api.get('/auth/me');
-
+          const res = await api.get<ApiReturn<User>>('/auth/me');
           login({
-            ...res.data,
+            ...res.data.data,
             token: token + '',
           });
         } catch (err) {

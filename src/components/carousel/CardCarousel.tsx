@@ -3,6 +3,7 @@ import Carousel from 'react-spring-3d-carousel';
 import { useState, useEffect } from 'react';
 import { config } from 'react-spring';
 import { cn } from '@/lib/utils';
+import { ChevronRightCircle, ChevronLeftCircle } from 'lucide-react';
 
 export default function CardCarousel(props: {
   cards: {
@@ -33,8 +34,11 @@ export default function CardCarousel(props: {
 
   return (
     <div
-      style={{ width: props.width, height: props.height, margin: props.margin }}
-      className={cn('flex justify-center flex-col', props.className)}
+      style={{ height: props.height, margin: props.margin }}
+      className={cn(
+        'flex justify-center items-center w-full flex-col md:w-[90%] relative',
+        props.className,
+      )}
     >
       <Carousel
         slides={cards}
@@ -43,6 +47,25 @@ export default function CardCarousel(props: {
         showNavigation={showArrows}
         animationConfig={config.gentle}
       />
+      <div className='absolute pt-2 z-10 w-[calc(75%+10px)] md:w-[calc(75%-75px)] flex justify-between'>
+        <button
+          className='cursor-pointer'
+          onClick={() => {
+            setGoToSlide(goToSlide - 1);
+          }}
+        >
+          <ChevronLeftCircle size={30} className='text-emerald-300' />
+        </button>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <button
+          className='cursor-pointer'
+          onClick={() => {
+            setGoToSlide(goToSlide + 1);
+          }}
+        >
+          <ChevronRightCircle size={30} className='text-emerald-300' />
+        </button>
+      </div>
     </div>
   );
 }
