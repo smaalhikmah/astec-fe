@@ -1,4 +1,3 @@
-import Layout from '@/components/layout/Layout';
 import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -16,7 +15,6 @@ import { talkshows } from '@/lib/zod';
 import withAuth from '@/components/hoc/withAuth';
 import { z } from 'zod';
 
-import { DevTool } from '@hookform/devtools';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -25,15 +23,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import ImagePreview from '@/components/form/ImagePreview';
 import { FaImage } from 'react-icons/fa6';
 import { formatCurrency } from '@/lib/utils';
+import 'yet-another-react-lightbox/styles.css';
+import Layout from '@/components/layout/Layout';
+import ImagePreview from '@/components/form/ImagePreview';
+import Alert from '@/components/button/Alert';
 
 export default withAuth(Registration, 'optional');
 function Registration() {
+  const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState({
     scan: null as File | null,
-    foto: null as File | null,
   });
 
   const form = useForm<z.infer<typeof talkshows>>({
@@ -62,6 +63,9 @@ function Registration() {
     },
   });
   function onSubmit(data: z.infer<typeof talkshows>) {
+    const form = new FormData();
+    form.append('bukti_tf', data.bukti_tf[0]);
+    form.append('data_diri', JSON.stringify(data.data_diri));
     // eslint-disable-next-line no-console
     console.log(data);
     // router.push('/competition/registration/step-2');
@@ -73,7 +77,7 @@ function Registration() {
     }
   }, [form]);
   return (
-    <Layout header='sticky'>
+    <Layout className='bg-black' header='sticky'>
       <div className='layout flex justify-center items-center flex-col'>
         <div>
           <p className='h1 '>Form pendaftaran talkshow</p>
@@ -81,7 +85,7 @@ function Registration() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='md:w-1/3 w-full space-y-4'
+            className='md:w-1/2 w-full space-y-4'
           >
             {fields.map((field, index) => (
               <div key={index}>
@@ -195,14 +199,15 @@ function Registration() {
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 fields.length > 1 && (
                   <div className='flex space-x-4'>
-                    <Button
+                    {/* <Button
                       variant='destructive'
                       onClick={() => {
                         remove(fields.length - 1);
                       }}
                     >
                       hapus
-                    </Button>
+                    </Button> */}
+                    <Alert onclick={() => remove(fields.length - 1)} />
                   </div>
                 )
               }
@@ -210,16 +215,20 @@ function Registration() {
 
             <div>
               <div
-                className={`flex  md:flex-[1] h-[fit-content] md:p-4 md:justify-between md:flex-row 
+                className={`flex justify-center items-center md:flex-[1] h-[fit-content]
                         
             `}
               >
                 {selectedImage.scan ? (
-                  <ImagePreview image={selectedImage?.scan} />
+                  <ImagePreview
+                    open={open}
+                    setOpen={setOpen}
+                    url={URL.createObjectURL(selectedImage.scan)}
+                  />
                 ) : (
-                  <div className='inline-flex items-center justify-between'>
+                  <div className='flex items-center justify-between'>
                     <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                      <FaImage className='text-2xl' />
+                      <FaImage size={40} />
                     </div>
                   </div>
                 )}
@@ -234,9 +243,9 @@ function Registration() {
                       Anda harus membayar sebersar{' '}
                       {formatCurrency(100000 * fields.length)}
                       <br></br>
-                      Bank: BRI No
+                      Bank: BRI
                       <br></br>
-                      Rek: 030701131750500
+                      No Rek: 030701131750500
                       <br></br>
                       A/N: Azita Zahwa Zahida Asmoro
                     </FormDescription>
@@ -271,7 +280,7 @@ function Registration() {
           </form>
         </Form>
       </div>
-      <DevTool control={form.control} />
+      {/* <DevTool control={form.control} /> */}
     </Layout>
   );
 }

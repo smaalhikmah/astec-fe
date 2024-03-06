@@ -8,9 +8,10 @@ import useAuthStore from '@/store/useAuthStore';
 
 interface Header {
   header?: string;
+  className?: string;
 }
 
-export default function Header({ header }: Header) {
+export default function Header({ header, className }: Header) {
   const { user } = useAuthStore();
   const animation = {
     hidden: {
@@ -31,6 +32,7 @@ export default function Header({ header }: Header) {
       className={cn(
         'w-full h-[82px] flex bg-transparent z-10 overflow-hidden ',
         header,
+        className,
       )}
     >
       <div className='flex justify-between w-full'>
@@ -40,7 +42,7 @@ export default function Header({ header }: Header) {
           variants={animation}
           className='flex space-x-4 md:pl-20 justify-center items-center'
         >
-          <div>
+          <div className='w-16 md:w-36'>
             <Image
               alt='logo'
               src='/images/logonobg.png'
@@ -49,7 +51,7 @@ export default function Header({ header }: Header) {
             />
           </div>
           <div className='flex items-end justify-center '>
-            <ul className='text-black h3 font-bold flex justify-center space-x-4 items-center '>
+            <ul className='text-black h4 font-bold flex justify-center space-x-4 items-center '>
               {links.map(({ href, label }) => (
                 <li key={`${href}${label}`}>
                   <Links href={href}>{label}</Links>

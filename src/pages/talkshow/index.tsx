@@ -19,7 +19,7 @@ export default function Index() {
               width={1200}
               className='rounded-lg'
             />
-            <h1 className='mt-8 text-4xl font-bold'>Lomba futsal</h1>
+            <h1 className='mt-8 text-4xl font-bold'>TalkShow keren</h1>
             <time dateTime='2020-12-12' className='text-sm text-slate-600'>
               {format(parseISO('2020-12-12'), 'LLLL d, yyyy')}
             </time>

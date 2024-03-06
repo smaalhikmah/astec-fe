@@ -33,14 +33,15 @@ export default function Cards() {
             variant='button'
             className='bg-gray-900 text-white'
             onClick={() =>
-              router.push(
-                '/competition/registration?competition=bola-voli',
-                '/competition/registration',
-              )
+              // router.push(
+              //   '/competition/registration?competition=bola-voli',
+              //   '/competition/registration',
+              // )
+              router.push('/competition/futsal')
             }
             href='/'
           >
-            Register
+            Read More
           </ArrowButton>
         </CardFooter>
       </Card>

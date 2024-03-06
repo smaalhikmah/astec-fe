@@ -6,12 +6,13 @@ import Head from 'next/head';
 interface Page {
   children: React.ReactNode;
   header?: string;
+  className?: string;
 }
-export default function Layout({ children, header }: Page) {
+export default function Layout({ children, header, className }: Page) {
   return (
     <>
       <Toaster />
-      <Header header={header} />
+      <Header header={header} className={className} />
       <Head>
         <title>Astec</title>
         <meta name='description' content='Astec' />

@@ -18,7 +18,7 @@ import { step2 } from '@/lib/zod';
 import useFormStore from '@/store/useFormStore';
 import { useRouter } from 'next/router';
 import { StepTwoData } from '@/types/form';
-import ImagePreview from '@/components/form/ImagePreview';
+import ImagePreview from '@/components/form/NextJsImage';
 import {
   Accordion,
   AccordionContent,

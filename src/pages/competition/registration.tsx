@@ -18,7 +18,7 @@ import { step1 } from '@/lib/zod';
 import useFormStore from '@/store/useFormStore';
 import { useRouter } from 'next/router';
 import { StepOneData } from '@/types/form';
-import ImagePreview from '@/components/form/ImagePreview';
+import ImagePreview from '@/components/form/NextJsImage';
 import withAuth from '@/components/hoc/withAuth';
 
 export default withAuth(Registration, 'optional');
@@ -62,7 +62,7 @@ function Registration() {
   }, [form, stepOne]);
 
   return (
-    <Layout header='sticky'>
+    <Layout header='sticky' className='bg-black'>
       <div className='layout w-full flex justify-center items-center flex-col'>
         <div>
           <p className='h1 '>Daftar Ketua</p>
