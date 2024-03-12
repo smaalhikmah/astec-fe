@@ -5,9 +5,11 @@ import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import Seo from '@/components/Seo';
+import useAuthStore from '@/store/useAuthStore';
 
 export default function Index() {
   const router = useRouter();
+  const { user } = useAuthStore();
   return (
     <Layout header='sticky'>
       <Seo templateTitle='Talkshow' />
@@ -79,15 +81,13 @@ export default function Index() {
 
                   <p className='italic'>contact person : 99786696986</p>
                   <Button
+                    disabled={user ? false : true}
                     variant='default'
                     onClick={() => {
-                      router.push(
-                        '/competition/registration?competition=bola-voli',
-                        '/competition/registration',
-                      );
+                      router.push('/talkshow/registration');
                     }}
                   >
-                    Daftar Lomba
+                    Nonton
                   </Button>
 
                   <div className='flex items-center justify-center py-8'></div>

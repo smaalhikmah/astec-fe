@@ -1,266 +1,114 @@
 import Layout from '@/components/layout/Layout';
 import React, { useEffect, useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { FaImage } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { step1 } from '@/lib/zod';
-import useFormStore from '@/store/useFormStore';
-import { useRouter } from 'next/router';
-import { StepOneData } from '@/types/form';
-import ImagePreview from '@/components/form/ImagePreview';
+
 import withAuth from '@/components/hoc/withAuth';
 import Seo from '@/components/Seo';
+import 'yet-another-react-lightbox/styles.css';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import Player12 from '@/components/form/pagesForm/Player12';
+import Player2 from '@/components/form/pagesForm/Player2';
+import useFormStore from '@/store/useFormStore';
+import toast from 'react-hot-toast';
+import { selectCompetition } from '@/types/type';
+import { ApiReturn } from '@/types/api';
+import api from '@/lib/axios-helper';
 
-export default withAuth(Registration, 'optional');
+export default withAuth(Registration, 'all');
 function Registration() {
-  const [open, setOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState({
-    scan: null as File | null,
-    foto: null as File | null,
-  });
+  const { stepOne } = useFormStore();
+  const [select, setSelect] = useState<selectCompetition>();
+  const [allCompetition, setAllCompetition] = useState<selectCompetition[]>();
 
-  const router = useRouter();
-  const { stepOne, setData } = useFormStore();
-  const form = useForm<StepOneData>({
-    mode: 'onTouched',
-    resolver: zodResolver(step1),
-    defaultValues: {
-      namaLengkapKetua: stepOne?.namaLengkapKetua || '',
-      noTelponKetua: stepOne?.noTelponKetua || '',
-      emailKetua: stepOne?.emailKetua || '',
-      provinsiSekolah: stepOne?.provinsiSekolah || '',
-      asalSekolah: stepOne?.asalSekolah || '',
-      scanKartuPelajarKetua:
-        stepOne?.scanKartuPelajarKetua ||
-        (null as unknown as FileList | undefined),
-      fotoKetua:
-        stepOne?.fotoKetua || (null as unknown as FileList | undefined),
-    },
-  });
-  function onSubmit(data: StepOneData) {
-    setData({ step: 1, data });
-    router.push('/competition/registration/step-2');
-  }
-  useEffect(() => {
-    if (stepOne) {
-      setSelectedImage({
-        scan: stepOne.scanKartuPelajarKetua?.[0] as File,
-        foto: stepOne.fotoKetua?.[0] as File,
-      });
-      form.setValue('scanKartuPelajarKetua', stepOne.scanKartuPelajarKetua);
-      form.setValue('fotoKetua', stepOne.fotoKetua);
+  async function getCompetitions() {
+    try {
+      const res = await api.get<ApiReturn<selectCompetition[]>>('homepage/all');
+      setAllCompetition(res.data.data);
+    } catch (err) {
+      toast.error('Opps, sepertinya ada yang tidak beres');
     }
-  }, [form, stepOne]);
+  }
 
+  useEffect(() => {
+    getCompetitions();
+  }, []);
+
+  useEffect(() => {
+    if (stepOne && allCompetition) {
+      const selected = allCompetition.find((value) => {
+        return value.id === stepOne.lomba;
+      });
+      if (selected) {
+        setSelect({
+          id: selected?.id,
+          lomba: selected?.lomba.toLocaleLowerCase().split(' ').join('-'),
+          max: selected?.max,
+          official: selected?.official,
+        });
+      }
+    }
+  }, [stepOne, allCompetition]);
   return (
     <Layout header='sticky'>
       <Seo templateTitle='Pendaftaran' />
-      <div className='layout w-full flex justify-center items-center flex-col'>
-        <div>
-          <p className='h1 '>Daftar Ketua</p>
-        </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className='w-1/3 space-y-2'
-          >
-            <FormField
-              control={form.control}
-              name='namaLengkapKetua'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Lengkap</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='Nama...'
-                      {...field}
-                      value={field.value}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='noTelponKetua'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>No telpon</FormLabel>
-                  <FormControl>
-                    <Input placeholder='08...' {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='emailKetua'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder='example@gmail.com' {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='provinsiSekolah'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Asal Provinsi</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Jawa timur' {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name='asalSekolah'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Asal Sekolah</FormLabel>
-                  <FormControl>
-                    <Input placeholder='SMA Konoha 1' {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div
-              className={`flex  md:flex-[1] h-[fit-content] md:p-4 md:justify-between md:flex-row 
-                        
-            `}
-            >
-              {selectedImage.scan ? (
-                <ImagePreview
-                  open={open}
-                  setOpen={setOpen}
-                  url={URL.createObjectURL(selectedImage.scan)}
-                />
-              ) : (
-                <div className='flex items-center justify-between'>
-                  <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                    <FaImage size={40} />
-                  </div>
-                </div>
-              )}
+      <div className='layout flex justify-center items-center flex-col'>
+        {allCompetition != undefined ? (
+          <>
+            <div className='md:w-1/2 w-full space-y-2'>
+              <p className='h2'>Form pendaftaran Lomba</p>
+              <Select
+                onValueChange={(value) => {
+                  const selected = allCompetition.find((item) => {
+                    return item.id === value;
+                  });
+                  if (selected) {
+                    setSelect({
+                      id: selected?.id,
+                      lomba: selected?.lomba
+                        .toLocaleLowerCase()
+                        .split(' ')
+                        .join('-'),
+                      max: selected?.max,
+                      official: selected?.official,
+                    });
+                  }
+                }}
+                defaultValue={stepOne?.lomba}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder='Pilih Lomba' />
+                </SelectTrigger>
+                <SelectContent>
+                  {allCompetition.map((value) => {
+                    return (
+                      <SelectItem key={value.id} value={`${value.id}`}>
+                        {value.lomba}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
             </div>
-            <FormField
-              control={form.control}
-              name='scanKartuPelajarKetua'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kartu </FormLabel>
-                  <FormControl>
-                    <Input
-                      type='file'
-                      id='fileInput'
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={(e) => {
-                        field.onChange(e.target.files);
-                        setSelectedImage({
-                          ...selectedImage,
-                          scan: e.target.files?.[0] as File,
-                        });
-                      }}
-                      ref={field.ref}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div
-              className={`flex  md:flex-[1] h-[fit-content] md:p-4 md:justify-between md:flex-row 
-                        
-            `}
-            >
-              {selectedImage.foto ? (
-                <ImagePreview
-                  open={open}
-                  setOpen={setOpen}
-                  url={URL.createObjectURL(selectedImage.foto)}
-                />
-              ) : (
-                <div className='inline-flex items-center justify-between'>
-                  <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                    <FaImage className='text-2xl' />
-                  </div>
-                </div>
-              )}
-            </div>
-            <FormField
-              control={form.control}
-              name='fotoKetua'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Foto Ketua</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='file'
-                      id='fileInput'
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={(e) => {
-                        field.onChange(e.target.files);
-                        setSelectedImage({
-                          ...selectedImage,
-                          foto: e.target.files?.[0] as File,
-                        });
-                      }}
-                      ref={field.ref}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type='submit'>Lanjut</Button>
-          </form>
-        </Form>
+            {allCompetition.find((value) => {
+              return value.id === select?.id && value.max === 12;
+            }) != undefined
+              ? select && <Player12 lomba={select?.id} />
+              : select && (
+                  <Player2
+                    lomba={select?.id}
+                    max={select?.max}
+                    official={select?.official}
+                  />
+                )}
+          </>
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
     </Layout>
   );

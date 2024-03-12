@@ -1,4 +1,4 @@
-import { Input } from './ui/input';
+import { Input } from '../ui/input';
 import {
   Table,
   TableBody,
@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from './ui/table';
+} from '../ui/table';
 import {
   SortingState,
   ColumnDef,
@@ -21,34 +21,22 @@ import {
 } from '@tanstack/react-table';
 
 import React from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from './ui/accordion';
+} from '../ui/dropdown-menu';
 
 interface Props<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
-  onFilterChange?: (filter: never) => void;
-  onDeleted?: () => void;
-  addData?: () => void;
   search?: string;
 }
-export default function RabDataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   data,
   columns,
-  onFilterChange,
-  onDeleted,
-  addData,
   search,
 }: Props<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -77,36 +65,25 @@ export default function RabDataTable<TData, TValue>({
       rowSelection,
     },
   });
-  React.useEffect(() => {
-    if (onFilterChange) {
-      onFilterChange(table.getFilteredSelectedRowModel().rowsById as never);
-    }
-  }, [onFilterChange, rowSelection, table]);
+
   return (
     <div className='w-full'>
       <div className='flex items-center py-4 justify-between'>
         <Input
           placeholder='Filter nama...'
           value={
-            (table.getColumn(search ?? 'name')?.getFilterValue() as string) ??
-            ''
+            (table
+              .getColumn(search ?? 'asalSekolah')
+              ?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
             table
-              .getColumn(search ?? 'name')
+              .getColumn(search ?? 'asalSekolah')
               ?.setFilterValue(event.target.value)
           }
           className='max-w-sm'
         />
         <div className='space-x-2'>
-          <Button variant='outline' className='ml-auto bg-black text-white'>
-            Import csv
-          </Button>
-
-          <Button variant='outline' className='ml-auto'>
-            Export csv
-          </Button>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline' className='ml-auto'>
@@ -133,9 +110,6 @@ export default function RabDataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={addData} variant='outline' className='ml-auto'>
-            Tambah data
-          </Button>
         </div>
       </div>
       <div className=''>
@@ -192,19 +166,23 @@ export default function RabDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className='flex-1 text-sm text-muted-foreground'>
-        {table.getFilteredSelectedRowModel().rows.length} dari{' '}
-        {table.getFilteredRowModel().rows.length} baris dipilih.
-      </div>
-      <div>
-        <Accordion type='single' collapsible className='w-44'>
-          <AccordionItem value='item-1'>
-            <AccordionTrigger>Aksi ceklist</AccordionTrigger>
-            <AccordionContent>
-              <button onClick={onDeleted}>Hapus</button>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+      <div className='flex items-center justify-end space-x-2 py-4'>
+        <Button
+          variant='outline'
+          size='sm'
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant='outline'
+          size='sm'
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );

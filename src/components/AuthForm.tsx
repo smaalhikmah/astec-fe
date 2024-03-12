@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
 
 import toast, { Toaster } from 'react-hot-toast';
-import Button from './form/Button';
+
 import {
   Form,
   FormControl,
@@ -19,6 +19,7 @@ import {
 import { Input } from './ui/input';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
+import { Button } from './ui/button';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -119,7 +120,7 @@ const AuthForm = () => {
   return (
     <div className=' sm:mx-auto sm:w-full sm:max-w-md'>
       <Toaster />
-      <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
+      <div className='px-4 bg-card py-8 border shadow sm:rounded-lg sm:px-10'>
         <Form {...form}>
           <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
             {variant === 'REGISTER' && (
@@ -192,7 +193,7 @@ const AuthForm = () => {
             )}
 
             <div>
-              <Button disabled={isLoading} fullWidth type='submit'>
+              <Button disabled={isLoading} className='w-full' type='submit'>
                 {variant === 'LOGIN' ? 'Sign in' : 'Register'}
               </Button>
             </div>

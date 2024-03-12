@@ -3,9 +3,11 @@ import Layout from '@/components/layout/Layout';
 import dynamic from 'next/dynamic';
 import { easeInOut, motion } from 'framer-motion';
 import withAuth from '@/components/hoc/withAuth';
-
+import { CompetitionData } from '@/components/data/Competition';
 import Cards from '@/components/carousel/Card';
 import Seo from '@/components/Seo';
+import { Card } from '@/types/card';
+import { Competition } from '@/types/competition';
 const CardCarousel = dynamic(
   () => import('@/components/carousel/CardCarousel'),
   {
@@ -58,61 +60,17 @@ function Home() {
   // useEffect(() => {
   //   getCompetition();
   // }, []);
-  const cards = [
-    {
-      key: 1,
-      content: <Cards />,
-    },
-    {
-      key: 2,
-      content: <Cards />,
-    },
-    {
-      key: 3,
-      content: <Cards />,
-    },
-    {
-      key: 4,
-      content: <Cards />,
-    },
-    {
-      key: 5,
-      content: <Cards />,
-    },
-    {
-      key: 6,
-      content: <Cards />,
-    },
-    {
-      key: 7,
-      content: <Cards />,
-    },
-    {
-      key: 8,
-      content: <Cards />,
-    },
-    {
-      key: 9,
-      content: <Cards />,
-    },
-    {
-      key: 10,
-      content: <Cards />,
-    },
-    {
-      key: 11,
-      content: <Cards />,
-    },
-    {
-      key: 12,
-      content: <Cards />,
-    },
-  ];
+  const cards: Card[] = CompetitionData.map(
+    (item: Competition, index: number) => ({
+      key: index,
+      content: <Cards<Competition> data={item} />,
+    }),
+  );
   return (
-    <Layout header='fixed' className='text-white dark:text-black'>
+    <Layout header='fixed' className='text-white'>
       <Seo templateTitle='Home' />
       <div className='min-h-screen md:h-screen w-full hero relative overflow-hidden'>
-        <div className='layout pt-20 space-y-10 md:space-y-0 md:pt-0 h-full flex flex-col justify-center items-center md:flex-row'>
+        <div className='layout space-x-4 pt-20 space-y-10 md:space-y-0 md:pt-0 h-full flex flex-col justify-center items-center md:flex-row'>
           <div className='flex h-full w-full md:w-1/2 flex-col justify-center space-y-2'>
             <div className='flex items-center space-x-4 '>
               <motion.div
@@ -132,16 +90,23 @@ function Home() {
               </motion.div>
             </div>
 
-            <div>
-              <p className='h3 text-white dark:text-black'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-                tempora expedita dolor eligendi perspiciatis, reiciendis
-                cupiditate unde soluta animi maxime dolores, atque modi hic
-                exercitationem cumque consequuntur, repellendus numquam. Nulla!
+            <motion.div
+              initial='hidden'
+              animate='visible'
+              variants={animation}
+              className='flex flex-col space-y-2 text-justify'
+            >
+              <p className='h3 text-white '>
+                ASTEC 2024 SMA AL HIKMAH SURABAYA siap menjadi ajang kalian
+                untuk terjun dalam aksi penuh adrenalin! Mari bergabung dalam
+                lomba-lomba seru kami. Tunjukkan skill terbaikmu, raih gelar
+                juara, dan rebut hadiah total puluhan juta rupiah (50 JUTA)!
+                Ayo, jangan sampai ketinggalan keseruan ini, daftarkan dirimu
+                sekarang juga!
               </p>
-            </div>
+            </motion.div>
             <div>
-              <ArrowButton className='bg-yellow-200' href='/auth'>
+              <ArrowButton className='bg-yellow-200 text-black' href='/auth'>
                 Register
               </ArrowButton>
             </div>

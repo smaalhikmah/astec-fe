@@ -51,15 +51,6 @@ export default function Header({ header, className }: Header) {
               width='120'
             />
           </div>
-          <div className='flex items-end justify-center '>
-            <ul className=' h4 font-bold flex justify-center space-x-4 items-center '>
-              {links.map(({ href, label }) => (
-                <li key={`${href}${label}`}>
-                  <Links href={href}>{label}</Links>
-                </li>
-              ))}
-            </ul>
-          </div>
         </motion.div>
 
         <motion.div
@@ -68,10 +59,19 @@ export default function Header({ header, className }: Header) {
           variants={animation}
           className='flex items-center '
         >
+          <div className='flex items-end justify-center '>
+            <ul className='font-bold flex justify-center md:space-x-4 space-x-2 items-center '>
+              {links.map(({ href, label }) => (
+                <li key={`${href}${label}`}>
+                  <Links href={href}>{label}</Links>
+                </li>
+              ))}
+            </ul>
+          </div>
           <ThemeButton />
           {user ? (
-            <ProfilButton className='bg-yellow-900' href='/profil'>
-              {user?.name || user?.email}
+            <ProfilButton user={user} className='bg-yellow-900' href='/profile'>
+              {user.name}
             </ProfilButton>
           ) : (
             <ProfilButton className='bg-yellow-900' href='/auth'>

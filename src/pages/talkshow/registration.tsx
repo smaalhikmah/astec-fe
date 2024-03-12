@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { talkshows } from '@/lib/zod';
+import { ACCEPTED_IMAGE_MIME_TYPES, talkshows } from '@/lib/zod';
 import withAuth from '@/components/hoc/withAuth';
 import { z } from 'zod';
 
@@ -24,18 +24,22 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { FaImage } from 'react-icons/fa6';
-import { formatCurrency } from '@/lib/utils';
+import { deleteImage, formatCurrency, uploadImage } from '@/lib/utils';
 import 'yet-another-react-lightbox/styles.css';
 import Layout from '@/components/layout/Layout';
 import ImagePreview from '@/components/form/ImagePreview';
 import Alert from '@/components/button/Alert';
+import toast from 'react-hot-toast';
+import api from '@/lib/axios-helper';
+import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
+import Seo from '@/components/Seo';
+import { DevTool } from '@hookform/devtools';
+import { useRouter } from 'next/router';
 
 export default withAuth(Registration, 'optional');
 function Registration() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState({
-    scan: null as File | null,
-  });
 
   const form = useForm<z.infer<typeof talkshows>>({
     mode: 'onTouched',
@@ -45,12 +49,16 @@ function Registration() {
         {
           nama: '',
           email: '',
-          nomor: '',
+          nomorTelepon: '',
           jenisKelamin: '',
           kodePromo: '',
         },
       ],
-      bukti_tf: '',
+      bukti_tf: {
+        file: null,
+        url: '',
+      },
+      status: 'pending',
     },
   });
 
@@ -64,23 +72,39 @@ function Registration() {
   });
   function onSubmit(data: z.infer<typeof talkshows>) {
     const form = new FormData();
-    form.append('bukti_tf', data.bukti_tf[0]);
+    form.append('bukti', data.bukti_tf.file as File);
     form.append('data_diri', JSON.stringify(data.data_diri));
-    // eslint-disable-next-line no-console
-    console.log(data);
-    // router.push('/competition/registration/step-2');
+
+    toast.promise(
+      api
+        .post(`talkshow/join`, form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(() => {
+          setTimeout(() => {
+            router.push('/success');
+          }, 2000);
+        }),
+      {
+        ...DEFAULT_TOAST_MESSAGE,
+        success: 'Yayyy kamu berhasil memesan tiket talkshow',
+      },
+    );
   }
 
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset();
-    }
-  }, [form]);
+  // useEffect(() => {
+  //   if (form.formState.isSubmitSuccessful) {
+  //     form.reset();
+  //   }
+  // }, [form]);
   return (
     <Layout header='sticky'>
+      <Seo templateTitle='Pendaftaran Talkshow' />
       <div className='layout flex justify-center items-center flex-col'>
         <div>
-          <p className='h1 '>Form pendaftaran talkshow</p>
+          <p className='h2'>Form pendaftaran talkshow</p>
         </div>
         <Form {...form}>
           <form
@@ -89,7 +113,25 @@ function Registration() {
           >
             {fields.map((field, index) => (
               <div key={index}>
-                <p className='h3'>Data diri pendaftar {index + 1}</p>
+                <p className='h3 pt-4'>Data diri pendaftar {index + 1}</p>
+                {/* <FormField
+                  control={form.control}
+                  name={`data_diri.${index}.nomorIdentitas`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>NISN/NIK/NOMOR KARTU PELAJAR</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='NISN/NIK/NOMOR KARTU PELAJAR...'
+                          {...field}
+                          value={field.value}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
                 <FormField
                   control={form.control}
                   name={`data_diri.${index}.nama`}
@@ -109,12 +151,19 @@ function Registration() {
                 />
                 <FormField
                   control={form.control}
-                  name={`data_diri.${index}.nomor`}
+                  name={`data_diri.${index}.nomorTelepon`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>No telpon</FormLabel>
                       <FormControl>
-                        <Input type='number' placeholder='08...' {...field} />
+                        <Input
+                          type='number'
+                          placeholder='08...'
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,12 +194,12 @@ function Registration() {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder='Pilih jenis kelamin' />
+                            <SelectValue placeholder='Pilih jenis Kelamin' />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value='laki-laki'>Laki-Laki</SelectItem>
-                          <SelectItem value='perempuan'>Perempuan</SelectItem>
+                          <SelectItem value='male'>Laki-laki</SelectItem>
+                          <SelectItem value='female'>Perempuan</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -185,7 +234,7 @@ function Registration() {
                     append({
                       nama: '',
                       email: '',
-                      nomor: '',
+                      nomorTelepon: '',
                       jenisKelamin: '',
                       kodePromo: '',
                     });
@@ -214,31 +263,34 @@ function Registration() {
             </div>
 
             <div>
+              <p className='h3 pt-4'>Bukti Pembayaran</p>
               <div
                 className={`flex justify-center items-center md:flex-[1] h-[fit-content]
                         
             `}
-              >
-                {selectedImage.scan ? (
-                  <ImagePreview
-                    open={open}
-                    setOpen={setOpen}
-                    url={URL.createObjectURL(selectedImage.scan)}
-                  />
-                ) : (
-                  <div className='flex items-center justify-between'>
-                    <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                      <FaImage size={40} />
-                    </div>
-                  </div>
-                )}
-              </div>
+              ></div>
               <FormField
                 control={form.control}
                 name='bukti_tf'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Bukti pembayaran </FormLabel>
+                    {form.getValues('bukti_tf.file') ? (
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={URL.createObjectURL(
+                          form.getValues('bukti_tf.file') as File,
+                        )}
+                        onDelete={() => deleteImage('bukti_tf', form)}
+                      />
+                    ) : (
+                      <div className='flex items-center justify-between'>
+                        <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                          <FaImage size={40} />
+                        </div>
+                      </div>
+                    )}
                     <FormDescription>
                       Anda harus membayar sebersar{' '}
                       {formatCurrency(100000 * fields.length)}
@@ -253,13 +305,13 @@ function Registration() {
                       <Input
                         type='file'
                         id='fileInput'
+                        accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
                         onBlur={field.onBlur}
                         name={field.name}
-                        onChange={(e) => {
-                          field.onChange(e.target.files);
-                          setSelectedImage({
-                            ...selectedImage,
-                            scan: e.target.files?.[0] as File,
+                        onChange={async (e) => {
+                          field.onChange({
+                            file: e.target.files?.[0] as File,
+                            url: await uploadImage(e.target.files?.[0] as File),
                           });
                         }}
                         ref={field.ref}
@@ -280,7 +332,7 @@ function Registration() {
           </form>
         </Form>
       </div>
-      {/* <DevTool control={form.control} /> */}
+      <DevTool control={form.control} />
     </Layout>
   );
 }

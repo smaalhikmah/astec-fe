@@ -2,18 +2,25 @@ import Image from 'next/image';
 import React from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import NextJsImage from './NextJsImage';
+import { Trash2Icon } from 'lucide-react';
+import Tippy from '../button/Tippy';
 
 interface ImagePreviewProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
   url: string;
+  onDelete: () => void;
 }
-function ImagePreview({ open, setOpen, url }: ImagePreviewProps) {
+function ImagePreview({ url, onDelete }: ImagePreviewProps) {
+  const [openLightbox, setOpenLightbox] = React.useState(false);
   return (
     <>
       <Lightbox
-        open={open}
-        close={() => setOpen(false)}
+        controller={{
+          closeOnBackdropClick: true,
+        }}
+        open={openLightbox}
+        close={() => setOpenLightbox(false)}
         slides={[
           {
             src: url,
@@ -23,14 +30,22 @@ function ImagePreview({ open, setOpen, url }: ImagePreviewProps) {
         ]}
         render={{ slide: NextJsImage }}
       />
-      <Image
-        src={url}
-        alt='bukti transfer'
-        width={200}
-        height={200}
-        onClick={() => setOpen(true)}
-        className='cursor-pointer'
-      />
+      <div className='relative w-fit'>
+        <Image
+          src={url}
+          alt='bukti transfer'
+          width={200}
+          height={200}
+          onClick={() => setOpenLightbox(true)}
+          className='cursor-pointer'
+        />
+        <Tippy text='Hapus gambar'>
+          <Trash2Icon
+            className='cursor-pointer absolute top-0 right-0 text-red-600'
+            onClick={onDelete}
+          />
+        </Tippy>
+      </div>
     </>
   );
 }

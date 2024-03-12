@@ -1,70 +1,54 @@
 import { z } from 'zod';
-
-const ACCEPTED_IMAGE_MIME_TYPES = [
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+);
+const foto = z.object({
+  file: z.any(),
+  url: z.string(),
+});
+export const ACCEPTED_IMAGE_MIME_TYPES = [
   'image/jpeg',
   'image/jpg',
   'image/png',
-  'image/webp',
 ];
-const MAX_FILE_SIZE = 1024 * 1024 * 1;
+export const MAX_FILE_SIZE = 1024 * 1024 * 1;
+
 export const step1 = z.object({
+  lomba: z.string().min(2, {
+    message: 'Lomba harus diisi.',
+  }),
   namaLengkapKetua: z.string().min(2, {
     message: 'namaLengkapKetua must be at least 2 characters.',
   }),
-  noTelponKetua: z.string().min(2, {}),
+  noTelponKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
   emailKetua: z.string().email(),
   provinsiSekolah: z.string().min(2, {}),
   asalSekolah: z.string().min(2, {}),
-  scanKartuPelajarKetua: z
-    .any()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Maksimal 1MB aja yaa.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.',
-    ),
-  fotoKetua: z
-    .any()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Maksimal 1MB aja yaa.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.',
-    ),
+  scanKartuPelajarKetua: foto,
+  fotoKetua: foto,
+  buktiFollow: foto,
+  nomorIdentitasKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
+});
+
+const member = z.object({
+  nomorIdentitas: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  namaLengkap: z.string().min(2, {}),
+  noTelpon: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  email: z.string().email(),
+  scanKartuPelajar: foto,
+  foto: foto,
+  buktiFollow: foto,
+  isKetua: z.boolean().optional().default(false),
 });
 
 export const step2 = z.object({
-  anggota: z.array(
-    z.object({
-      namaLengkap: z.string().min(2, {}),
-      noTelpon: z.string().min(2, {}),
-      email: z.string().email(),
-      scanKartuPelajar: z
-        .any()
-        .refine((files) => {
-          return files?.[0]?.size <= MAX_FILE_SIZE;
-        }, `Maksimal 1MB aja yaa.`)
-        .refine(
-          (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-          'Only .jpg, .jpeg, .png and .webp formats are supported.',
-        ),
-      foto: z
-        .any()
-        .refine((files) => {
-          return files?.[0]?.size <= MAX_FILE_SIZE;
-        }, `Maksimal 1MB aja yaa.`)
-        .refine(
-          (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-          'Only .jpg, .jpeg, .png and .webp formats are supported.',
-        ),
-    }),
-  ),
+  anggota: z.array(member),
 });
 
 export const pembimbing = z.object({
-  nama: z.string().min(2, {}),
+  nama: z.string().min(2, {
+    message: 'Nama wajib diisi',
+  }),
   email: z.string().email(),
 });
 
@@ -72,11 +56,20 @@ export const step3 = z.object({
   pembimbing: z.array(pembimbing).max(2, {
     message: 'Only 2 pembimbing are allowed.',
   }),
+  buktiTf: foto,
 });
 
 // talkshow
 
 const talkshow = z.object({
+  // nomorIdentitas: z
+  //   .number({
+  //     required_error: 'Nomor identitas wajib diisi',
+  //     invalid_type_error: 'Nomor identitas wajib diisi',
+  //   })
+  //   .min(1, {
+  //     message: 'Nomor identitas wajib diisi',
+  //   }),
   nama: z
     .string({
       required_error: 'Nama wajib diisi',
@@ -91,7 +84,7 @@ const talkshow = z.object({
     .email({
       message: 'Email tidak valid',
     }),
-  nomor: z.string().optional(),
+  nomorTelepon: z.string().regex(phoneRegex, 'Masa kek gitu'),
   jenisKelamin: z
     .string({
       required_error: 'Jenis kelamin wajib diisi',
@@ -105,13 +98,18 @@ const talkshow = z.object({
 
 export const talkshows = z.object({
   data_diri: z.array(talkshow),
-  bukti_tf: z
-    .any()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Maksimal 1MB aja yaa.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.',
-    ),
+  bukti_tf: foto,
+  status: z.string().min(2, {}),
+});
+
+// badminton
+export const badminton = z.object({
+  lomba: z.string().min(2, {
+    message: 'Lomba harus diisi.',
+  }),
+  provinsiSekolah: z.string().min(2, {}),
+  asalSekolah: z.string().min(2, {}),
+  anggota: z.array(member),
+  pembimbing: z.array(pembimbing).optional(),
+  buktiTf: foto,
 });

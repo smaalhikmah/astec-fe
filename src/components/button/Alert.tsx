@@ -15,12 +15,34 @@ import { Button } from '../ui/button';
 interface AlertProps {
   onclick: () => void;
   message?: string;
+  placeholder?: string;
+  className?: string;
+  variant?:
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+    | null
+    | undefined;
 }
-function Alert({ onclick, message }: AlertProps) {
+function Alert({
+  onclick,
+  message,
+  placeholder,
+  className,
+  variant,
+}: AlertProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive'>Hapus</Button>
+        <Button
+          className={className}
+          variant={variant ? variant : 'destructive'}
+        >
+          {placeholder ?? 'Hapus'}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
