@@ -49,6 +49,7 @@ function Registration() {
           lomba: selected?.lomba.toLocaleLowerCase().split(' ').join('-'),
           max: selected?.max,
           official: selected?.official,
+          harga: selected?.harga,
         });
       }
     }
@@ -75,6 +76,7 @@ function Registration() {
                         .join('-'),
                       max: selected?.max,
                       official: selected?.official,
+                      harga: selected?.harga,
                     });
                   }
                 }}
@@ -97,12 +99,13 @@ function Registration() {
             {allCompetition.find((value) => {
               return value.id === select?.id && value.max === 12;
             }) != undefined
-              ? select && <Player12 lomba={select?.id} />
+              ? select && <Player12 lomba={select?.id} harga={select?.harga} />
               : select && (
                   <Player2
                     lomba={select?.id}
                     max={select?.max}
                     official={select?.official}
+                    harga={select?.harga}
                   />
                 )}
           </>

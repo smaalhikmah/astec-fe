@@ -3,8 +3,12 @@ const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 const foto = z.object({
-  file: z.any(),
-  url: z.string(),
+  file: z.any({
+    required_error: 'Foto wajib diisi',
+  }),
+  url: z.string().min(2, {
+    message: 'Foto wajib diisi',
+  }),
 });
 export const ACCEPTED_IMAGE_MIME_TYPES = [
   'image/jpeg',
@@ -28,6 +32,7 @@ export const step1 = z.object({
   fotoKetua: foto,
   buktiFollow: foto,
   nomorIdentitasKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  harga: z.string().min(2, {}),
 });
 
 const member = z.object({

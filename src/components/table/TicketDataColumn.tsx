@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../ui/button';
 import { UserTicket } from '@/types/type';
+import Link from 'next/link';
 
 export const TicketDataColumn: ColumnDef<UserTicket>[] = [
   {
@@ -33,7 +34,12 @@ export const TicketDataColumn: ColumnDef<UserTicket>[] = [
     header: 'Action',
     cell: ({ row }) => {
       return (
-        <div className='space-x-4'>
+        <div className='md:space-x-4 space-x-0 space-y-2 md:space-y-0 '>
+          <Link href={`/user/${row.original.id}`}>
+            <Button variant='default' size='sm'>
+              Detail
+            </Button>
+          </Link>
           {row.original.approved ? (
             <Button>Download tiket</Button>
           ) : (

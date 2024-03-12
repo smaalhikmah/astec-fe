@@ -12,12 +12,12 @@ export type DetailUserData = {
   peserta: Peserta[];
 };
 
-type Lomba = {
+export type Lomba = {
   id: string;
   nama: string;
 };
 
-type Mentor = {
+export type Mentor = {
   name: string;
   email: string;
 };
@@ -28,7 +28,7 @@ type Order = {
   provinsiSekolah: string;
 };
 
-type Peserta = {
+export type Peserta = {
   namaLengkap: string;
   email: string;
   foto: string;

@@ -309,15 +309,15 @@ function Registration() {
                         onBlur={field.onBlur}
                         name={field.name}
                         onChange={async (e) => {
-                          field.onChange({
-                            file: e.target.files?.[0] as File,
-                            url: await uploadImage(e.target.files?.[0] as File),
-                          });
+                          uploadImage(
+                            e.target.files?.[0] as File,
+                            form,
+                            field.name,
+                          );
                         }}
                         ref={field.ref}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />

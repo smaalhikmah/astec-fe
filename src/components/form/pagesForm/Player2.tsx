@@ -36,8 +36,9 @@ interface Player2Props {
   max: number;
   official: boolean;
   lomba: string;
+  harga: string;
 }
-export default function Player2({ max, official, lomba }: Player2Props) {
+export default function Player2({ max, official, lomba, harga }: Player2Props) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -329,17 +330,15 @@ export default function Player2({ max, official, lomba }: Player2Props) {
                           onBlur={field.onBlur}
                           name={field.name}
                           onChange={async (e) => {
-                            field.onChange({
-                              file: e.target.files?.[0] as File,
-                              url: await uploadImage(
-                                e.target.files?.[0] as File,
-                              ),
-                            });
+                            uploadImage(
+                              e.target.files?.[0] as File,
+                              form,
+                              field.name,
+                            );
                           }}
                           ref={field.ref}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -377,17 +376,15 @@ export default function Player2({ max, official, lomba }: Player2Props) {
                           onBlur={field.onBlur}
                           name={field.name}
                           onChange={async (e) => {
-                            field.onChange({
-                              file: e.target.files?.[0] as File,
-                              url: await uploadImage(
-                                e.target.files?.[0] as File,
-                              ),
-                            });
+                            uploadImage(
+                              e.target.files?.[0] as File,
+                              form,
+                              field.name,
+                            );
                           }}
                           ref={field.ref}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -429,17 +426,15 @@ export default function Player2({ max, official, lomba }: Player2Props) {
                           name={field.name}
                           accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
                           onChange={async (e) => {
-                            field.onChange({
-                              file: e.target.files?.[0] as File,
-                              url: await uploadImage(
-                                e.target.files?.[0] as File,
-                              ),
-                            });
+                            uploadImage(
+                              e.target.files?.[0] as File,
+                              form,
+                              field.name,
+                            );
                           }}
                           ref={field.ref}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -580,8 +575,7 @@ export default function Player2({ max, official, lomba }: Player2Props) {
                     </div>
                   )}
                   <FormDescription>
-                    Anda harus membayar sebersar{' '}
-                    {formatCurrency(100000 * fields.length)}
+                    Anda harus membayar sebersar {formatCurrency(Number(harga))}
                     <br></br>
                     Bank: BRI
                     <br></br>
@@ -597,15 +591,15 @@ export default function Player2({ max, official, lomba }: Player2Props) {
                       onBlur={field.onBlur}
                       name={field.name}
                       onChange={async (e) => {
-                        field.onChange({
-                          file: e.target.files?.[0] as File,
-                          url: await uploadImage(e.target.files?.[0] as File),
-                        });
+                        uploadImage(
+                          e.target.files?.[0] as File,
+                          form,
+                          field.name,
+                        );
                       }}
                       ref={field.ref}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

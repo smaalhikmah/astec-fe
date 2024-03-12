@@ -22,7 +22,6 @@ function Profile() {
   React.useEffect(() => {
     fetchData();
   }, []);
-
   return (
     <Layout>
       <main>

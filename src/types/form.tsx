@@ -10,6 +10,7 @@ export type StepOneData = {
   scanKartuPelajarKetua: foto;
   fotoKetua: foto;
   buktiFollow: foto;
+  harga: string;
 };
 
 export type StepTwoData = {

@@ -17,12 +17,20 @@ export function formatCurrency(value: number) {
   }).format(value);
 }
 
-export async function uploadImage(params: File | undefined) {
+export async function uploadImage(
+  params: File | undefined,
+  form: any,
+  name: string,
+) {
   if (params?.type && !ACCEPTED_IMAGE_MIME_TYPES.includes(params.type)) {
     return toast.error('File tidak didukung');
   }
   if (params?.size && params.size > MAX_FILE_SIZE) {
-    return toast.error('Ukuran file terlalu besar');
+    toast.error('Ukuran file terlalu besar');
+    return form.setValue(name, {
+      file: null,
+      url: '',
+    });
   }
   const formData = new FormData();
   formData.append('img', params as Blob);
@@ -31,7 +39,10 @@ export async function uploadImage(params: File | undefined) {
       'Content-Type': 'multipart/form-data',
     },
   });
-  return res.data.data.img_url;
+  return form.setValue(name, {
+    file: params,
+    url: res.data.data.img_url,
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

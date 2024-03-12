@@ -22,17 +22,18 @@ import toast from 'react-hot-toast';
 import { FaImage } from 'react-icons/fa';
 import 'yet-another-react-lightbox/styles.css';
 import ImagePreview from '@/components/form/ImagePreview';
-import { deleteImage, formFormat, uploadImage } from '@/lib/utils';
+import {
+  deleteImage,
+  formFormat,
+  formatCurrency,
+  uploadImage,
+} from '@/lib/utils';
 import Alert from '@/components/button/Alert';
 import { z } from 'zod';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 
 export default function StepThree() {
-  // const [selectedImage, setSelectedImage] = useState({
-  //   scan: null as File | null,
-  //   foto: null as File | null,
-  // });
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { stepOne, stepTwo, stepThree, setData } = useFormStore();
@@ -189,53 +190,66 @@ export default function StepThree() {
               }
             </div>
 
-            <div
-              className={`flex pt-4 md:flex-[1] h-[fit-content] md:p-4 md:justify-between md:flex-row 
+            <div>
+              <p className='h3 pt-4'>Bukti Pembayaran</p>
+              <div
+                className={`flex justify-center items-center md:flex-[1] h-[fit-content]
                         
             `}
-            ></div>
-            <FormField
-              control={form.control}
-              name='buktiTf'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Foto Kartu Pelajar </FormLabel>
-                  {form.getValues('buktiTf.file') ? (
-                    <ImagePreview
-                      open={open}
-                      setOpen={setOpen}
-                      url={URL.createObjectURL(
-                        form.getValues('buktiTf.file') as File,
-                      )}
-                      onDelete={() => deleteImage('buktiTf.file', form)}
-                    />
-                  ) : (
-                    <div className='flex items-center justify-between'>
-                      <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                        <FaImage size={40} />
+              ></div>
+              <FormField
+                control={form.control}
+                name='buktiTf'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bukti pembayaran </FormLabel>
+                    {form.getValues('buktiTf.file') ? (
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={URL.createObjectURL(
+                          form.getValues('buktiTf.file') as File,
+                        )}
+                        onDelete={() => deleteImage('buktiTf', form)}
+                      />
+                    ) : (
+                      <div className='flex items-center justify-between'>
+                        <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                          <FaImage size={40} />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  <FormControl>
-                    <Input
-                      type='file'
-                      id='fileInput'
-                      accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={async (e) => {
-                        field.onChange({
-                          file: e.target.files?.[0] as File,
-                          url: await uploadImage(e.target.files?.[0] as File),
-                        });
-                      }}
-                      ref={field.ref}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    )}
+                    <FormDescription>
+                      Anda harus membayar sebersar{' '}
+                      {formatCurrency(Number(stepOne?.harga))} ke rekening
+                      <br></br>
+                      Bank: BRI
+                      <br></br>
+                      No Rek: 030701131750500
+                      <br></br>
+                      A/N: Azita Zahwa Zahida Asmoro
+                    </FormDescription>
+                    <FormControl>
+                      <Input
+                        type='file'
+                        id='fileInput'
+                        accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        onChange={async (e) => {
+                          uploadImage(
+                            e.target.files?.[0] as File,
+                            form,
+                            field.name,
+                          );
+                        }}
+                        ref={field.ref}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className='flex space-x-4'>
               <Button
                 onClick={() => {

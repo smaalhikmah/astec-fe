@@ -24,8 +24,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { deleteImage, uploadImage } from '@/lib/utils';
 interface Player12Props {
   lomba: string;
+  harga: string;
 }
-export default function Player12({ lomba }: Player12Props) {
+export default function Player12({ lomba, harga }: Player12Props) {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
@@ -35,6 +36,7 @@ export default function Player12({ lomba }: Player12Props) {
     mode: 'onTouched',
     resolver: zodResolver(step1),
     defaultValues: {
+      harga: harga,
       lomba: stepOne?.lomba || lomba,
       nomorIdentitasKetua: '212121',
       namaLengkapKetua: stepOne?.namaLengkapKetua || 'sasasa',
@@ -206,15 +208,15 @@ export default function Player12({ lomba }: Player12Props) {
                     onBlur={field.onBlur}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -254,10 +256,11 @@ export default function Player12({ lomba }: Player12Props) {
                     onBlur={field.onBlur}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />
@@ -302,10 +305,11 @@ export default function Player12({ lomba }: Player12Props) {
                     accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />

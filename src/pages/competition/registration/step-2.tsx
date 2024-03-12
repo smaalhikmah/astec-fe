@@ -193,15 +193,15 @@ export default function StepTwo() {
                     onBlur={field.onBlur}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -241,15 +241,15 @@ export default function StepTwo() {
                     accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -291,15 +291,15 @@ export default function StepTwo() {
                     onBlur={field.onBlur}
                     name={field.name}
                     onChange={async (e) => {
-                      field.onChange({
-                        file: e.target.files?.[0] as File,
-                        url: await uploadImage(e.target.files?.[0] as File),
-                      });
+                      uploadImage(
+                        e.target.files?.[0] as File,
+                        form,
+                        field.name,
+                      );
                     }}
                     ref={field.ref}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
