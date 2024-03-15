@@ -278,7 +278,7 @@ export default function StepTwo() {
                                     )}
                                     onDelete={() =>
                                       deleteImage(
-                                        `anggota.${i}.scanKartuPelajar.file`,
+                                        `anggota.${i}.scanKartuPelajar`,
                                         form,
                                       )
                                     }
@@ -322,10 +322,7 @@ export default function StepTwo() {
                                       ) as File,
                                     )}
                                     onDelete={() =>
-                                      deleteImage(
-                                        `anggota.${i}.foto.file`,
-                                        form,
-                                      )
+                                      deleteImage(`anggota.${i}.foto`, form)
                                     }
                                   />
                                 ) : (

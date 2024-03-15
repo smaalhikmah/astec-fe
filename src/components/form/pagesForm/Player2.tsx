@@ -324,7 +324,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                             ) as File,
                           )}
                           onDelete={() =>
-                            deleteImage(`anggota.${index}.foto.file`, form)
+                            deleteImage(`anggota.${index}.foto`, form)
                           }
                         />
                       ) : (
@@ -361,10 +361,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                             ) as File,
                           )}
                           onDelete={() =>
-                            deleteImage(
-                              `anggota.${index}.buktiFollow.file`,
-                              form,
-                            )
+                            deleteImage(`anggota.${index}.buktiFollow`, form)
                           }
                         />
                       ) : (
