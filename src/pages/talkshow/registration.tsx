@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,6 @@ import InputImage from '@/components/button/InputImage';
 export default withAuth(Registration, 'optional');
 function Registration() {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof talkshows>>({
     mode: 'onTouched',
@@ -252,8 +251,6 @@ function Registration() {
                     <FormLabel>Bukti pembayaran </FormLabel>
                     {form.getValues('bukti_tf.file') ? (
                       <ImagePreview
-                        open={open}
-                        setOpen={setOpen}
                         url={URL.createObjectURL(
                           form.getValues('bukti_tf.file') as File,
                         )}
