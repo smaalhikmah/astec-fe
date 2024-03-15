@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,18 +10,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { ACCEPTED_IMAGE_MIME_TYPES, badminton } from '@/lib/zod';
+import { badminton } from '@/lib/zod';
 import { z } from 'zod';
 
 import { Input } from '@/components/ui/input';
 
 import { FaImage } from 'react-icons/fa6';
-import {
-  deleteImage,
-  formFormat,
-  formatCurrency,
-  uploadImage,
-} from '@/lib/utils';
+import { deleteImage, formFormat, formatCurrency } from '@/lib/utils';
 import 'yet-another-react-lightbox/styles.css';
 import ImagePreview from '@/components/form/ImagePreview';
 import Alert from '@/components/button/Alert';
@@ -31,6 +26,7 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
+import InputImage from '@/components/button/InputImage';
 
 interface Player2Props {
   max: number;
@@ -39,7 +35,6 @@ interface Player2Props {
   harga: string;
 }
 export default function Player2({ max, official, lomba, harga }: Player2Props) {
-  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof badminton>>({
@@ -69,25 +64,8 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
             url: '',
           },
         },
-        {
-          nomorIdentitas: '2321321',
-          namaLengkap: 'dasdas',
-          noTelpon: '1232321',
-          email: 'ddas@asa.com',
-          scanKartuPelajar: {
-            file: null,
-            url: '',
-          },
-          foto: {
-            file: null,
-            url: '',
-          },
-          buktiFollow: {
-            file: null,
-            url: '',
-          },
-        },
       ],
+
       buktiTf: {
         file: null,
         url: '',
@@ -301,8 +279,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                         `anggota.${index}.scanKartuPelajar.file`,
                       ) ? (
                         <ImagePreview
-                          open={open}
-                          setOpen={setOpen}
                           url={URL.createObjectURL(
                             form.getValues(
                               `anggota.${index}.scanKartuPelajar.file`,
@@ -323,20 +299,12 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                         </div>
                       )}
                       <FormControl>
-                        <Input
-                          type='file'
-                          id='fileInput'
-                          accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                          onBlur={field.onBlur}
-                          name={field.name}
-                          onChange={async (e) => {
-                            uploadImage(
-                              e.target.files?.[0] as File,
-                              form,
-                              field.name,
-                            );
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: `anggota.${index}.scanKartuPelajar`,
                           }}
-                          ref={field.ref}
                         />
                       </FormControl>
                     </FormItem>
@@ -350,8 +318,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                       <FormLabel>Foto Formal </FormLabel>
                       {form.getValues(`anggota.${index}.foto.file`) ? (
                         <ImagePreview
-                          open={open}
-                          setOpen={setOpen}
                           url={URL.createObjectURL(
                             form.getValues(
                               `anggota.${index}.foto.file`,
@@ -369,20 +335,12 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                         </div>
                       )}
                       <FormControl>
-                        <Input
-                          type='file'
-                          id='fileInput'
-                          accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                          onBlur={field.onBlur}
-                          name={field.name}
-                          onChange={async (e) => {
-                            uploadImage(
-                              e.target.files?.[0] as File,
-                              form,
-                              field.name,
-                            );
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: `anggota.${index}.foto`,
                           }}
-                          ref={field.ref}
                         />
                       </FormControl>
                     </FormItem>
@@ -397,8 +355,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                       <FormLabel>Bukti Follow Instagram </FormLabel>
                       {form.getValues(`anggota.${index}.buktiFollow.file`) ? (
                         <ImagePreview
-                          open={open}
-                          setOpen={setOpen}
                           url={URL.createObjectURL(
                             form.getValues(
                               `anggota.${index}.buktiFollow.file`,
@@ -419,20 +375,12 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                         </div>
                       )}
                       <FormControl>
-                        <Input
-                          type='file'
-                          id='fileInput'
-                          onBlur={field.onBlur}
-                          name={field.name}
-                          accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                          onChange={async (e) => {
-                            uploadImage(
-                              e.target.files?.[0] as File,
-                              form,
-                              field.name,
-                            );
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: `anggota.${index}.buktiFollow`,
                           }}
-                          ref={field.ref}
                         />
                       </FormControl>
                     </FormItem>
@@ -560,8 +508,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                   <FormLabel>Bukti pembayaran </FormLabel>
                   {form.getValues('buktiTf.file') ? (
                     <ImagePreview
-                      open={open}
-                      setOpen={setOpen}
                       url={URL.createObjectURL(
                         form.getValues('buktiTf.file') as File,
                       )}
@@ -584,20 +530,12 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                     A/N: Azita Zahwa Zahida Asmoro
                   </FormDescription>
                   <FormControl>
-                    <Input
-                      type='file'
-                      id='fileInput'
-                      accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={async (e) => {
-                        uploadImage(
-                          e.target.files?.[0] as File,
-                          form,
-                          field.name,
-                        );
+                    <InputImage
+                      form={form}
+                      field={{
+                        ...field,
+                        name: 'buktiTf',
                       }}
-                      ref={field.ref}
                     />
                   </FormControl>
                 </FormItem>

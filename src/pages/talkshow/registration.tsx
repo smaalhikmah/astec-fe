@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { ACCEPTED_IMAGE_MIME_TYPES, talkshows } from '@/lib/zod';
+import { talkshows } from '@/lib/zod';
 import withAuth from '@/components/hoc/withAuth';
 import { z } from 'zod';
 
@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { FaImage } from 'react-icons/fa6';
-import { deleteImage, formatCurrency, uploadImage } from '@/lib/utils';
+import { deleteImage, formatCurrency } from '@/lib/utils';
 import 'yet-another-react-lightbox/styles.css';
 import Layout from '@/components/layout/Layout';
 import ImagePreview from '@/components/form/ImagePreview';
@@ -35,6 +35,7 @@ import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 import Seo from '@/components/Seo';
 import { DevTool } from '@hookform/devtools';
 import { useRouter } from 'next/router';
+import InputImage from '@/components/button/InputImage';
 
 export default withAuth(Registration, 'optional');
 function Registration() {
@@ -58,7 +59,6 @@ function Registration() {
         file: null,
         url: '',
       },
-      status: 'pending',
     },
   });
 
@@ -114,24 +114,7 @@ function Registration() {
             {fields.map((field, index) => (
               <div key={index}>
                 <p className='h3 pt-4'>Data diri pendaftar {index + 1}</p>
-                {/* <FormField
-                  control={form.control}
-                  name={`data_diri.${index}.nomorIdentitas`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>NISN/NIK/NOMOR KARTU PELAJAR</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          placeholder='NISN/NIK/NOMOR KARTU PELAJAR...'
-                          {...field}
-                          value={field.value}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
+
                 <FormField
                   control={form.control}
                   name={`data_diri.${index}.nama`}
@@ -248,14 +231,6 @@ function Registration() {
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 fields.length > 1 && (
                   <div className='flex space-x-4'>
-                    {/* <Button
-                      variant='destructive'
-                      onClick={() => {
-                        remove(fields.length - 1);
-                      }}
-                    >
-                      hapus
-                    </Button> */}
                     <Alert onclick={() => remove(fields.length - 1)} />
                   </div>
                 )
@@ -302,20 +277,12 @@ function Registration() {
                       A/N: Azita Zahwa Zahida Asmoro
                     </FormDescription>
                     <FormControl>
-                      <Input
-                        type='file'
-                        id='fileInput'
-                        accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                        onBlur={field.onBlur}
-                        name={field.name}
-                        onChange={async (e) => {
-                          uploadImage(
-                            e.target.files?.[0] as File,
-                            form,
-                            field.name,
-                          );
+                      <InputImage
+                        form={form}
+                        field={{
+                          ...field,
+                          name: 'bukti_tf',
                         }}
-                        ref={field.ref}
                       />
                     </FormControl>
                   </FormItem>

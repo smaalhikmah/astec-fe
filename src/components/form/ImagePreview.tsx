@@ -6,8 +6,6 @@ import { Trash2Icon } from 'lucide-react';
 import Tippy from '../button/Tippy';
 
 interface ImagePreviewProps {
-  open?: boolean;
-  setOpen?: (open: boolean) => void;
   url: string;
   onDelete: () => void;
 }

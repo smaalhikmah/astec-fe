@@ -111,16 +111,6 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
               router.replace(HOME_ROUTE);
             }
           }
-          if (routeRole === 'admin') {
-            if (user?.role !== 'TRAINER') {
-              router.replace(HOME_ROUTE);
-              if (query?.redirect) {
-                router.replace(query.redirect as string);
-              } else {
-                router.replace(HOME_ROUTE);
-              }
-            }
-          }
         } else {
           // Prevent unauthenticated user from accessing protected pages
           if (routeRole !== 'auth' && routeRole !== 'optional') {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaImage } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -19,16 +19,15 @@ import Seo from '@/components/Seo';
 import 'yet-another-react-lightbox/styles.css';
 
 import { DevTool } from '@hookform/devtools';
-import { ACCEPTED_IMAGE_MIME_TYPES, step1 } from '@/lib/zod';
+import { step1 } from '@/lib/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { deleteImage, uploadImage } from '@/lib/utils';
+import { deleteImage } from '@/lib/utils';
+import InputImage from '@/components/button/InputImage';
 interface Player12Props {
   lomba: string;
   harga: string;
 }
 export default function Player12({ lomba, harga }: Player12Props) {
-  const [open, setOpen] = useState(false);
-
   const router = useRouter();
   const { stepOne, setData } = useFormStore();
 
@@ -186,8 +185,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                 <FormLabel>Kartu </FormLabel>
                 {form.getValues('scanKartuPelajarKetua.file') ? (
                   <ImagePreview
-                    open={open}
-                    setOpen={setOpen}
                     url={URL.createObjectURL(
                       form.getValues('scanKartuPelajarKetua.file') as File,
                     )}
@@ -201,20 +198,12 @@ export default function Player12({ lomba, harga }: Player12Props) {
                   </div>
                 )}
                 <FormControl>
-                  <Input
-                    type='file'
-                    id='fileInput'
-                    accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    onChange={async (e) => {
-                      uploadImage(
-                        e.target.files?.[0] as File,
-                        form,
-                        field.name,
-                      );
+                  <InputImage
+                    form={form}
+                    field={{
+                      ...field,
+                      name: 'scanKartuPelajarKetua',
                     }}
-                    ref={field.ref}
                   />
                 </FormControl>
               </FormItem>
@@ -234,8 +223,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                 <FormLabel>Foto Formal </FormLabel>
                 {form.getValues('fotoKetua.file') ? (
                   <ImagePreview
-                    open={open}
-                    setOpen={setOpen}
                     url={URL.createObjectURL(
                       form.getValues('fotoKetua.file') as File,
                     )}
@@ -249,20 +236,12 @@ export default function Player12({ lomba, harga }: Player12Props) {
                   </div>
                 )}
                 <FormControl>
-                  <Input
-                    type='file'
-                    id='fileInput'
-                    accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    onChange={async (e) => {
-                      uploadImage(
-                        e.target.files?.[0] as File,
-                        form,
-                        field.name,
-                      );
+                  <InputImage
+                    form={form}
+                    field={{
+                      ...field,
+                      name: 'fotoKetua',
                     }}
-                    ref={field.ref}
                   />
                 </FormControl>
                 <FormMessage />
@@ -283,8 +262,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                 <FormLabel>Bukti Follow Instagram </FormLabel>
                 {form.getValues('buktiFollow.file') ? (
                   <ImagePreview
-                    open={open}
-                    setOpen={setOpen}
                     url={URL.createObjectURL(
                       form.getValues('buktiFollow.file') as File,
                     )}
@@ -298,20 +275,12 @@ export default function Player12({ lomba, harga }: Player12Props) {
                   </div>
                 )}
                 <FormControl>
-                  <Input
-                    type='file'
-                    id='fileInput'
-                    onBlur={field.onBlur}
-                    accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                    name={field.name}
-                    onChange={async (e) => {
-                      uploadImage(
-                        e.target.files?.[0] as File,
-                        form,
-                        field.name,
-                      );
+                  <InputImage
+                    form={form}
+                    field={{
+                      ...field,
+                      name: 'buktiFollow',
                     }}
-                    ref={field.ref}
                   />
                 </FormControl>
                 <FormMessage />

@@ -41,9 +41,19 @@ export const TicketDataColumn: ColumnDef<UserTicket>[] = [
             </Button>
           </Link>
           {row.original.approved ? (
-            <Button>Download tiket</Button>
+            <Button>
+              <Link
+                href={row.original?.ticketURL}
+                target='_blank'
+                rel='noopener noreferrer'
+                locale={false}
+                download
+              >
+                Download Tiket
+              </Link>
+            </Button>
           ) : (
-            <span> Menunggu Persetujuan</span>
+            <span>Pending</span>
           )}
         </div>
       );

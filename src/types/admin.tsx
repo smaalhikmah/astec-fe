@@ -3,6 +3,31 @@ export type UserData = {
   asalSekolah: string;
   approved: boolean;
   provinsiSekolah: string;
+  namaKetua: string;
+  lomba: Lomba;
+};
+
+export type TalkShow = {
+  id: string;
+  nama: string;
+  approved: boolean;
+  email: string;
+};
+
+export type DetailTalkshow = {
+  order: {
+    approved: boolean;
+    buktiTf: string;
+  };
+  participants: participant[];
+};
+
+export type participant = {
+  id: string;
+  nama: string;
+  email: string;
+  phone: string;
+  gender: string;
 };
 
 export type DetailUserData = {

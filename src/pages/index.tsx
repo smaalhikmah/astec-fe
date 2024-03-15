@@ -71,14 +71,14 @@ function Home() {
       <Seo templateTitle='Home' />
       <div className='min-h-screen md:h-screen w-full hero relative overflow-hidden'>
         <div className='layout space-x-4 pt-20 space-y-10 md:space-y-0 md:pt-0 h-full flex flex-col justify-center items-center md:flex-row'>
-          <div className='flex h-full w-full md:w-1/2 flex-col justify-center space-y-2'>
-            <div className='flex items-center space-x-4 '>
-              <motion.div
+          <div className='flex h-full w-full md:w-1/2 flex-col justify-center space-y-3'>
+            <div className='flex items-center '>
+              {/* <motion.div
                 initial='divHidden'
                 animate='divisible'
                 variants={animation}
                 className='h-44 w-2 bg-white'
-              ></motion.div>
+              ></motion.div> */}
               <motion.div
                 initial='textHidden'
                 animate='textVisible'
@@ -94,9 +94,9 @@ function Home() {
               initial='hidden'
               animate='visible'
               variants={animation}
-              className='flex flex-col space-y-2 text-justify'
+              className='flex flex-col space-y-2'
             >
-              <p className='h3 text-white '>
+              <p className='h3 text-white text-justify break-all '>
                 ASTEC 2024 SMA AL HIKMAH SURABAYA siap menjadi ajang kalian
                 untuk terjun dalam aksi penuh adrenalin! Mari bergabung dalam
                 lomba-lomba seru kami. Tunjukkan skill terbaikmu, raih gelar
@@ -105,11 +105,16 @@ function Home() {
                 sekarang juga!
               </p>
             </motion.div>
-            <div>
+            <motion.div
+              initial='hidden'
+              animate='visible'
+              variants={animation}
+              className='flex flex-col space-y-2'
+            >
               <ArrowButton className='bg-yellow-200 text-black' href='/auth'>
                 Register
               </ArrowButton>
-            </div>
+            </motion.div>
           </div>
 
           <motion.div

@@ -73,12 +73,12 @@ export default function DataTable<TData, TValue>({
           placeholder='Filter nama...'
           value={
             (table
-              .getColumn(search ?? 'asalSekolah')
+              .getColumn(search ?? 'asalSekolah' ?? 'nama')
               ?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
             table
-              .getColumn(search ?? 'asalSekolah')
+              .getColumn(search ?? 'asalSekolah' ?? 'nama')
               ?.setFilterValue(event.target.value)
           }
           className='max-w-sm'
@@ -114,15 +114,12 @@ export default function DataTable<TData, TValue>({
       </div>
       <div className=''>
         <Table>
-          <TableHeader className='bg-pinktable'>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                className='text-center text-blue-700'
-                key={headerGroup.id}
-              >
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead className='text-center' key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -139,7 +136,7 @@ export default function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className={Number(row.id) % 2 === 0 ? 'bg-gray-300' : ''}
+                  className='text-center'
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >

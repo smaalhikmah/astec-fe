@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import useAuthStore from '@/store/useAuthStore';
 import ThemeButton from '../button/ThemeButton';
+import Link from 'next/link';
 
 interface Header {
   header?: string;
@@ -13,7 +14,7 @@ interface Header {
 }
 
 export default function Header({ header, className }: Header) {
-  const { user } = useAuthStore();
+  const user = useAuthStore.useUser();
   const animation = {
     hidden: {
       x: '200',
@@ -69,13 +70,15 @@ export default function Header({ header, className }: Header) {
             </ul>
           </div>
           <ThemeButton />
-          {user ? (
-            <ProfilButton user={user} className='bg-yellow-900' href='/profile'>
+          {user != null && user ? (
+            <ProfilButton user={user} className='bg-yellow-900'>
               {user.name}
             </ProfilButton>
           ) : (
-            <ProfilButton className='bg-yellow-900' href='/auth'>
-              Log in
+            <ProfilButton className='bg-yellow-900'>
+              <Link href='/auth' passHref legacyBehavior>
+                Log in
+              </Link>
             </ProfilButton>
           )}
         </motion.div>

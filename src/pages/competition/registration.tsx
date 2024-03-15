@@ -54,6 +54,7 @@ function Registration() {
       }
     }
   }, [stepOne, allCompetition]);
+
   return (
     <Layout header='sticky'>
       <Seo templateTitle='Pendaftaran' />

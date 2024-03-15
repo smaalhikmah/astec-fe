@@ -1,9 +1,11 @@
+import Seo from '@/components/Seo';
 import Link from 'next/link';
 import React from 'react';
 
 export default function Custom404() {
   return (
     <section>
+      <Seo templateTitle='404' />
       <div className='bg-black text-white'>
         <div className='flex h-screen'>
           <div className='m-auto text-center'>

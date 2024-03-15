@@ -54,7 +54,7 @@ export default function CardCarousel(props: {
             setGoToSlide(goToSlide - 1);
           }}
         >
-          <ChevronLeftCircle size={40} className='text-emerald-300' />
+          <ChevronLeftCircle size={30} className='text-emerald-300' />
         </button>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <button
@@ -63,7 +63,7 @@ export default function CardCarousel(props: {
             setGoToSlide(goToSlide + 1);
           }}
         >
-          <ChevronRightCircle size={40} className='text-emerald-300' />
+          <ChevronRightCircle size={30} className='text-emerald-300' />
         </button>
       </div>
     </div>

@@ -17,23 +17,26 @@ interface Props<T extends Competition> {
 export default function Cards<T extends Competition>({ data }: Props<T>) {
   const router = useRouter();
   return (
-    <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] shadow-lg rounded-lg overflow-hidden'>
-      <Card className='h-full max-h-full p-0'>
-        <CardHeader>
-          <div>
-            <Image src='/images/hero.jpg' alt='hero' width={400} height={300} />
+    <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] rounded-lg overflow-hidden'>
+      <Card>
+        <CardHeader className='h-60 max-h-60 md:h-72 md:max-h-72 overflow-hidden flex flex-col justify-between'>
+          <div className='w-full h-52'>
+            <Image src={data.image} alt='hero' width={500} height={400} />
           </div>
+
           <CardTitle>
             <p className='h3 font-bold'>{data.title}</p>
           </CardTitle>
         </CardHeader>
-        <CardContent className='md:h-48 h-36 overflow-hidden text-pretty text-justify'>
-          <p className=' text-gray-500'>{data.description}</p>
+        <CardContent className='md:h-48 h-36 overflow-hidden text-pretty text-justify '>
+          <p className=' text-gray-500 text-justify break-all'>
+            {data.description}
+          </p>
         </CardContent>
         <CardFooter>
           <ArrowButton
             variant='button'
-            className='bg-gray-900 text-white'
+            className='bg-gray-900 text-white h-9 mt-3 dark:bg-white dark:text-black'
             onClick={() =>
               // router.push(
               //   '/competition/registration?competition=bola-voli',

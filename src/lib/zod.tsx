@@ -67,14 +67,6 @@ export const step3 = z.object({
 // talkshow
 
 const talkshow = z.object({
-  // nomorIdentitas: z
-  //   .number({
-  //     required_error: 'Nomor identitas wajib diisi',
-  //     invalid_type_error: 'Nomor identitas wajib diisi',
-  //   })
-  //   .min(1, {
-  //     message: 'Nomor identitas wajib diisi',
-  //   }),
   nama: z
     .string({
       required_error: 'Nama wajib diisi',
@@ -89,7 +81,9 @@ const talkshow = z.object({
     .email({
       message: 'Email tidak valid',
     }),
-  nomorTelepon: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  nomorTelepon: z.string().regex(phoneRegex, 'Masa kek gitu').min(2, {
+    message: 'Nomor telepon wajib diisi',
+  }),
   jenisKelamin: z
     .string({
       required_error: 'Jenis kelamin wajib diisi',
@@ -104,7 +98,6 @@ const talkshow = z.object({
 export const talkshows = z.object({
   data_diri: z.array(talkshow),
   bukti_tf: foto,
-  status: z.string().min(2, {}),
 });
 
 // badminton

@@ -20,14 +20,20 @@ import { Input } from './ui/input';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 import { Button } from './ui/button';
+import { EyeIcon, EyeOff } from 'lucide-react';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
   const router = useRouter();
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
   const login = useAuthStore.useLogin();
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   const toggleVariant = useCallback(() => {
     if (variant === 'LOGIN') {
@@ -47,20 +53,6 @@ const AuthForm = () => {
     mode: 'onTouched',
   });
 
-  // async function getImgUrl(files: FileList | null) {
-  //   const formData = new FormData();
-
-  //   if (files) {
-  //     formData.append('img', files[0]);
-  //     const res = await api.post('image/upload', formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //         Accept: 'application/json',
-  //       },
-  //     });
-  //     form.setValue('img_url', res.data.img_url);
-  //   }
-  // }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     const form = new FormData();
@@ -120,7 +112,7 @@ const AuthForm = () => {
   return (
     <div className=' sm:mx-auto sm:w-full sm:max-w-md'>
       <Toaster />
-      <div className='px-4 bg-card py-8 border shadow sm:rounded-lg sm:px-10'>
+      <div className='px-4 bg-card py-8 border shadow sm:px-10 rounded-lg'>
         <Form {...form}>
           <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
             {variant === 'REGISTER' && (
@@ -160,7 +152,24 @@ const AuthForm = () => {
                 <FormItem>
                   <FormLabel>password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='****' {...field} />
+                    <div className='relative'>
+                      <Input
+                        type={passwordShown ? 'text' : 'password'}
+                        placeholder='****'
+                        {...field}
+                      />
+                      {!passwordShown ? (
+                        <EyeOff
+                          className='absolute right-2 top-2 cursor-pointer'
+                          onClick={togglePasswordVisiblity}
+                        />
+                      ) : (
+                        <EyeIcon
+                          className='absolute right-2 top-2 cursor-pointer'
+                          onClick={togglePasswordVisiblity}
+                        />
+                      )}
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -210,9 +219,7 @@ const AuthForm = () => {
         </div>
         <div className='flex justify-center gap-2 px-2 mt-6 text-sm text-gray-500 '>
           <div>
-            {variant === 'LOGIN'
-              ? 'New to Pose Palace?'
-              : 'Already have an account?'}
+            {variant === 'LOGIN' ? 'New to Astec?' : 'Already have an account?'}
           </div>
           <div onClick={toggleVariant} className='underline cursor-pointer'>
             {variant === 'LOGIN' ? 'Create an account' : 'Login'}

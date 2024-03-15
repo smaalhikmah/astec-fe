@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/Layout';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 
@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { ACCEPTED_IMAGE_MIME_TYPES, step3, badminton } from '@/lib/zod';
+import { step3, badminton } from '@/lib/zod';
 import useFormStore from '@/store/useFormStore';
 import { useRouter } from 'next/router';
 import { StepThreeData } from '@/types/form';
@@ -22,19 +22,15 @@ import toast from 'react-hot-toast';
 import { FaImage } from 'react-icons/fa';
 import 'yet-another-react-lightbox/styles.css';
 import ImagePreview from '@/components/form/ImagePreview';
-import {
-  deleteImage,
-  formFormat,
-  formatCurrency,
-  uploadImage,
-} from '@/lib/utils';
+import { deleteImage, formFormat, formatCurrency } from '@/lib/utils';
 import Alert from '@/components/button/Alert';
 import { z } from 'zod';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
+import InputImage from '@/components/button/InputImage';
+import Seo from '@/components/Seo';
 
 export default function StepThree() {
-  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { stepOne, stepTwo, stepThree, setData } = useFormStore();
   const form = useForm<StepThreeData>({
@@ -93,6 +89,7 @@ export default function StepThree() {
       ],
     };
     const formData = formFormat(newData);
+
     toast.promise(
       api.post('competition/participate', formData).then(() => {
         setTimeout(() => {
@@ -124,14 +121,15 @@ export default function StepThree() {
 
   return (
     <Layout header='sticky'>
-      <div className='layout w-full flex justify-center items-center flex-col'>
+      <Seo templateTitle='step-3' />
+      <div className='layout flex justify-center items-center flex-col'>
         <div>
           <p className='h1 '>Daftar Pembimbing</p>
         </div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='w-1/3 space-y-2'
+            className='md:w-1/2 w-full space-y-2'
           >
             {fields.map((field, index) => (
               <div key={index}>
@@ -158,7 +156,7 @@ export default function StepThree() {
                       <FormLabel>Email Pembimbing {index + 1}</FormLabel>
                       <FormDescription />
                       <FormControl>
-                        <Input placeholder='Nama...' {...field} />
+                        <Input placeholder='example@gmail.com' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -205,8 +203,6 @@ export default function StepThree() {
                     <FormLabel>Bukti pembayaran </FormLabel>
                     {form.getValues('buktiTf.file') ? (
                       <ImagePreview
-                        open={open}
-                        setOpen={setOpen}
                         url={URL.createObjectURL(
                           form.getValues('buktiTf.file') as File,
                         )}
@@ -230,20 +226,12 @@ export default function StepThree() {
                       A/N: Azita Zahwa Zahida Asmoro
                     </FormDescription>
                     <FormControl>
-                      <Input
-                        type='file'
-                        id='fileInput'
-                        accept={ACCEPTED_IMAGE_MIME_TYPES.join(',')}
-                        onBlur={field.onBlur}
-                        name={field.name}
-                        onChange={async (e) => {
-                          uploadImage(
-                            e.target.files?.[0] as File,
-                            form,
-                            field.name,
-                          );
+                      <InputImage
+                        form={form}
+                        field={{
+                          ...field,
+                          name: 'buktiTf',
                         }}
-                        ref={field.ref}
                       />
                     </FormControl>
                   </FormItem>

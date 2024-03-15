@@ -1,5 +1,9 @@
+import Seo from '@/components/Seo';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import ImagePreview from '@/components/admin/ImagePreview';
+import Alert from '@/components/button/Alert';
+import adminWithAuth from '@/components/hoc/adminWithAuth';
+import { approved } from '@/components/table/UserDataColumn';
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +17,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import toast from 'react-hot-toast';
 import 'yet-another-react-lightbox/styles.css';
-
+export default adminWithAuth(Index, 'all');
 function Index() {
   const [dataUser, setDataUser] = React.useState<DetailUserData>();
   const [open, setOpen] = React.useState(false);
@@ -26,16 +30,20 @@ function Index() {
         const res = await api.get(`admin/order/competition/${slug}`);
         setDataUser(res.data.data);
       } catch (err) {
-        toast.error('oops, something went wrong');
+        toast.error('Sesi anda Telah berakhir silahkan login kembali');
+        setTimeout(() => {
+          router.push('/admin/login');
+        }, 1000);
       }
     }
     if (slug) {
       fetchData();
     }
-  }, [slug]);
+  }, [router, slug]);
 
   return (
     <AdminLayout>
+      <Seo templateTitle='Admin' />
       <main>
         <section>
           <div className='layout p-2 space-y-4'>
@@ -46,21 +54,33 @@ function Index() {
                 </p>
 
                 <div className='flex justify-between'>
-                  <div>
-                    <p>Order</p>
-                    <p>Asal Sekolah: {dataUser.order.asalSekolah}</p>
-                    <p>Provinsi Sekolah: {dataUser.order.provinsiSekolah}</p>
-                    <p>Bukti Pembayaran</p>
-                    <ImagePreview
-                      open={open}
-                      setOpen={setOpen}
-                      url={dataUser.order.buktiTf}
-                    />
+                  <div className='space-y-4'>
+                    <div>
+                      <p className='h2'>Detail </p>
+                      <p>Asal Sekolah: {dataUser.order.asalSekolah}</p>
+                      <p>Provinsi Sekolah: {dataUser.order.provinsiSekolah}</p>
+                    </div>
+
+                    <div>
+                      <p className='h2'>Bukti Pembayaran</p>
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={dataUser.order.buktiTf}
+                      />
+                    </div>
                   </div>
                   <div>
                     <p className='h2'>
                       Status: <span className='text-red-600'>Pending</span>
                     </p>
+                    <Alert
+                      onclick={() => approved(slug as string)}
+                      placeholder='Setujui'
+                      message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+                      variant='default'
+                      className='bg-green-500 hover:bg-green-600'
+                    />
                   </div>
                 </div>
 
@@ -120,7 +140,7 @@ function Index() {
                 <div className='p-4'>
                   {
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    dataUser.mentor.length > 0 && (
+                    dataUser.mentor && dataUser.mentor.length > 0 && (
                       <div>
                         <p className='h2'>Pembimbing</p>
                         <Accordion type='single' collapsible className='w-full'>
@@ -161,5 +181,3 @@ function Index() {
     </AdminLayout>
   );
 }
-
-export default Index;

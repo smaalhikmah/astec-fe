@@ -1,7 +1,7 @@
 export const CompetitionData = [
   {
     id: 1,
-    image: '/images/hero.jpg',
+    image: '/images/competition/basket-putra/basket.webp',
     gender: 'Male',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
@@ -20,7 +20,7 @@ export const CompetitionData = [
   },
   {
     id: 2,
-    image: '/images/hero.jpg',
+    image: '/images/competition/basket-putri/basket.webp',
     gender: 'Female',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
@@ -39,7 +39,7 @@ export const CompetitionData = [
   },
   {
     id: 3,
-    image: '/images/hero.jpg',
+    image: '/images/competition/mini-soccer/mini.webp',
     gender: 'Male',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
@@ -51,14 +51,14 @@ export const CompetitionData = [
     official: true,
     path: '/competition/mini-soccer',
     images: [
-      '/images/competition/english-speech/3.webp',
-      '/images/competition/english-speech/4.webp',
-      '/images/competition/english-speech/5.webp',
+      '/images/competition/mini-soccer/21.webp',
+      '/images/competition/mini-soccer/22.webp',
+      '/images/competition/mini-soccer/23.webp',
     ],
   },
   {
     id: 4,
-    image: '/images/hero.jpg',
+    image: '/images/competition/badminton/badminton.webp',
     gender: 'Male',
     grade: 'sma/smk/MA sederajat',
     price: 100000,
@@ -82,20 +82,22 @@ export const CompetitionData = [
     grade: 'sma/smk/MA sederajat',
     price: 150000,
     title: 'Business Plan Competition',
-    description: '',
+    description:
+      'Kamu seorang pebisnis sejati? Buktikan potensi luarbiasamu dengan mengikuti Lomba Rencana Bisnis (Bussines Plan) ASTEC 2024. Temukan inovasi yang tak terbatas, dan munculkan kreativitasmu lalu raih hadiah impianmu!',
     prize: '',
     participants: 3,
     official: false,
     path: '/competition/business-plan-competition',
     images: [
-      '/images/competition/business-plan/21.webp',
-      '/images/competition/business-plan/22.webp',
-      '/images/competition/business-plan/23.webp',
+      '/images/competition/business-plan/24.webp',
+      '/images/competition/business-plan/25.webp',
+      '/images/competition/business-plan/26.webp',
+      '/images/competition/business-plan/27.webp',
     ],
   },
   {
     id: 6,
-    image: '/images/hero.jpg',
+    image: '/images/competition/short-movie/short.webp',
     gender: 'Male/Female',
     grade: 'sma/smk/MA sederajat',
     price: 100000,
@@ -113,7 +115,7 @@ export const CompetitionData = [
   },
   {
     id: 7,
-    image: '/images/hero.jpg',
+    image: '/images/filmm.jpg',
     gender: 'Male/Female',
     grade: '',
     price: 100000,
@@ -132,7 +134,7 @@ export const CompetitionData = [
   },
   {
     id: 8,
-    image: '/images/hero.jpg',
+    image: '/images/competition/essay/essay.webp',
     gender: 'Male/Female',
     grade: '',
     price: 80000,
@@ -151,7 +153,7 @@ export const CompetitionData = [
   },
   {
     id: 9,
-    image: '/images/hero.jpg',
+    image: '/images/competition/english-speech/english.webp',
     gender: 'Male/Female',
     grade: '',
     price: 50000,

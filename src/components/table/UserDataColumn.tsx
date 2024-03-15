@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 import Alert from '../button/Alert';
 
-async function approved(id: string) {
+export async function approved(id: string) {
   toast.promise(
     api
       .put(`admin/order/competition/${id}`, {
@@ -18,6 +18,12 @@ async function approved(id: string) {
         if (res.data.code === 200) {
           window.location.reload();
         }
+      })
+      .catch(() => {
+        toast.error('Sesi anda Telah berakhir silahkan login kembali');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }),
     {
       ...DEFAULT_TOAST_MESSAGE,
@@ -79,15 +85,7 @@ export const UserDataColumn: ColumnDef<UserData>[] = [
               Detail
             </Button>
           </Link>
-          {/* <Button
-            variant='destructive'
-            size='sm'
-            onClick={() => {
-              approved(row.original.id);
-            }}
-          >
-            Setujui
-          </Button> */}
+
           <Alert
             onclick={() => approved(row.original.id)}
             placeholder='Setujui'

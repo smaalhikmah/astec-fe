@@ -1,5 +1,6 @@
-import { AdminLayout } from '@/components/admin/AdminLayout';
+import Seo from '@/components/Seo';
 import ImagePreview from '@/components/admin/ImagePreview';
+import Layout from '@/components/layout/Layout';
 import {
   Accordion,
   AccordionContent,
@@ -35,9 +36,9 @@ function Index() {
       fetchData();
     }
   }, [slug]);
-
   return (
-    <AdminLayout>
+    <Layout>
+      <Seo templateTitle='Ticket' />
       <main>
         <section>
           <div className='layout p-2 space-y-4'>
@@ -70,7 +71,13 @@ function Index() {
                     </p>
                     {userTicket.order.approved && (
                       <Button variant='link'>
-                        <Link href={userTicket.order.ticketURL}>
+                        <Link
+                          href={userTicket.order.ticketURL}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          locale={false}
+                          download
+                        >
                           Download Tiket
                         </Link>
                       </Button>
@@ -134,7 +141,7 @@ function Index() {
                 <div className='p-4'>
                   {
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    userTicket.mentor.length > 0 && (
+                    userTicket.mentor && userTicket.mentor.length > 0 && (
                       <div>
                         <p className='h2'>Pembimbing</p>
                         <Accordion type='single' collapsible className='w-full'>
@@ -172,7 +179,7 @@ function Index() {
           </div>
         </section>
       </main>
-    </AdminLayout>
+    </Layout>
   );
 }
 
