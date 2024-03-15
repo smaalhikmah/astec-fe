@@ -98,6 +98,7 @@ function Registration() {
   //     form.reset();
   //   }
   // }, [form]);
+
   return (
     <Layout header='sticky'>
       <Seo templateTitle='Pendaftaran Talkshow' />
@@ -287,10 +288,7 @@ function Registration() {
               />
             </div>
 
-            <Button
-              disabled={!form.formState.isValid || form.formState.isSubmitting}
-              type='submit'
-            >
+            <Button disabled={form.formState.isSubmitting} type='submit'>
               Lanjut
             </Button>
           </form>

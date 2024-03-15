@@ -32,7 +32,7 @@ function Index() {
       } catch (err) {
         toast.error('Sesi anda Telah berakhir silahkan login kembali');
         setTimeout(() => {
-          router.push('/admin/login');
+          router.push('/auth/admin');
         }, 1000);
       }
     }

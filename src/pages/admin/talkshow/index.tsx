@@ -4,6 +4,7 @@ import adminWithAuth from '@/components/hoc/adminWithAuth';
 import DataTable from '@/components/table/DataTable';
 import { TalkShowDataColumn } from '@/components/table/TalkshowDataColumn';
 import api from '@/lib/axios-helper';
+import useAdminStore from '@/store/useAdminStore';
 import { TalkShow } from '@/types/admin';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -13,6 +14,7 @@ export default adminWithAuth(Index, 'all');
 function Index() {
   const [dataUser, setDataUser] = React.useState<TalkShow[]>([]);
   const router = useRouter();
+  const { logout } = useAdminStore();
 
   React.useEffect(() => {
     async function fetchData() {
@@ -21,8 +23,9 @@ function Index() {
         setDataUser(res.data.data);
       } catch (err) {
         toast.error('Sesi anda Telah berakhir silahkan login kembali');
+        logout();
         setTimeout(() => {
-          router.push('/admin/login');
+          router.push('/auth/admin');
         }, 1000);
       }
     }
