@@ -23,7 +23,7 @@ const ArrowButton: react.FC<Myprops> = ({
         <button onClick={onClick}>
           <div
             className={cn(
-              'rounded-xl border h1 max-w-32 cursor-pointer p-2 flex justify-center items-center space-x-2 text-base text-center',
+              'rounded-xl border h1 max-w-36 cursor-pointer p-2 flex justify-center items-center space-x-2 text-base text-center',
               className,
             )}
           >
