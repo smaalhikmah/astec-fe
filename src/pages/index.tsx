@@ -8,6 +8,7 @@ import Cards from '@/components/carousel/Card';
 import Seo from '@/components/Seo';
 import { Card } from '@/types/card';
 import { Competition } from '@/types/competition';
+import useAuthStore from '@/store/useAuthStore';
 const CardCarousel = dynamic(
   () => import('@/components/carousel/CardCarousel'),
   {
@@ -16,6 +17,7 @@ const CardCarousel = dynamic(
 );
 export default withAuth(Home, 'optional');
 function Home() {
+  const { user } = useAuthStore();
   // const [competition, setCompetition] = useState([]);
   const animation = {
     hidden: {
@@ -111,9 +113,31 @@ function Home() {
               variants={animation}
               className='flex flex-col space-y-2'
             >
-              <ArrowButton className='bg-yellow-200 text-black' href='/auth'>
-                Register
-              </ArrowButton>
+              {user ? (
+                <div className='flex space-x-4'>
+                  <ArrowButton
+                    className='bg-yellow-200 text-black max-w-40 h-10'
+                    href='/competition/registration'
+                  >
+                    Daftar lomba
+                  </ArrowButton>
+                  <ArrowButton
+                    className='bg-yellow-200 text-black max-w-64 h-10'
+                    href='/talkshow/registration'
+                  >
+                    Daftar Film Taklshow
+                  </ArrowButton>
+                </div>
+              ) : (
+                <>
+                  <ArrowButton
+                    className='bg-yellow-200 text-black'
+                    href='/auth'
+                  >
+                    Register
+                  </ArrowButton>
+                </>
+              )}
             </motion.div>
           </div>
 

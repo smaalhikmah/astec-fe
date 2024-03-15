@@ -36,7 +36,7 @@ export default function Cards<T extends Competition>({ data }: Props<T>) {
         <CardFooter>
           <ArrowButton
             variant='button'
-            className='bg-gray-900 text-white h-9 mt-3 dark:bg-white dark:text-black'
+            className='bg-gray-900 text-white h-10 mt-3 dark:bg-white dark:text-black'
             onClick={() =>
               // router.push(
               //   '/competition/registration?competition=bola-voli',
