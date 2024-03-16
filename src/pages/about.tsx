@@ -14,17 +14,14 @@ function Index() {
           <div className='layout flex justify-center'>
             <div className='mt-20 text-center space-y-4'>
               <p className='h1'>About Us</p>
-              <div className='w-full'>
-                <div>
-                  <Image
-                    src='/images/posterlomba.webp'
-                    width={350}
-                    height={350}
-                    alt='aboutus'
-                    onLoad={() => setLoading(false)}
-                  />
-                </div>
-
+              <div className='w-full h-96'>
+                <Image
+                  src='/images/posterlomba.webp'
+                  width={350}
+                  height={350}
+                  alt='aboutus'
+                  onLoad={() => setLoading(false)}
+                />
                 {loading && (
                   <div className='flex items-center justify-center h-96 w-72'>
                     <Skeleton className='w-full h-full' />
