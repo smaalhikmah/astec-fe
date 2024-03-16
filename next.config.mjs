@@ -13,7 +13,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.smaalhikmah.com',
         port: '',
-        pathname: '/image/',
+        pathname: '/image/**',
       },
     ],
   }
