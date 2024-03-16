@@ -31,6 +31,7 @@ export const step1 = z.object({
   scanKartuPelajarKetua: foto,
   fotoKetua: foto,
   buktiFollow: foto,
+  suratRekomendasi: foto,
   nomorIdentitasKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
   harga: z.string().min(2, {}),
 });
@@ -110,4 +111,5 @@ export const badminton = z.object({
   anggota: z.array(member),
   pembimbing: z.array(pembimbing).optional(),
   buktiTf: foto,
+  suratRekomendasi: foto,
 });

@@ -11,4 +11,5 @@ export interface Competition {
   official: boolean;
   path: string;
   images: string[];
+  contact: string[];
 }

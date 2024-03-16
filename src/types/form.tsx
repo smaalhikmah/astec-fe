@@ -11,6 +11,7 @@ export type StepOneData = {
   fotoKetua: foto;
   buktiFollow: foto;
   harga: string;
+  suratRekomendasi: foto;
 };
 
 export type StepTwoData = {

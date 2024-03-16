@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -6,22 +6,35 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Image from 'next/image';
 import ArrowButton from '../button/ArrowButton';
 import { useRouter } from 'next/router';
 import { Competition } from '@/types/competition';
+import { Skeleton } from '../ui/skeleton';
+import Image from 'next/image';
 
 interface Props<T extends Competition> {
   data: T;
 }
 export default function Cards<T extends Competition>({ data }: Props<T>) {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   return (
     <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] rounded-lg overflow-hidden'>
       <Card>
         <CardHeader className='h-60 max-h-60 md:h-72 md:max-h-72 overflow-hidden flex flex-col justify-between'>
           <div className='w-full h-52'>
-            <Image src={data.image} alt='hero' width={500} height={400} />
+            <Image
+              src={data.image}
+              alt='hero'
+              width={500}
+              height={400}
+              onLoad={() => setLoading(false)}
+            />
+            {loading && (
+              <div className='flex items-center justify-center h-52'>
+                <Skeleton className='w-full h-full' />
+              </div>
+            )}
           </div>
 
           <CardTitle>

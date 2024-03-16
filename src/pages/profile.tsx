@@ -19,7 +19,6 @@ function Profile() {
     try {
       const res = await api.get(`competition/order`);
       const res2 = await api.get(`talkshow/order`);
-
       setTicketData(res.data.data);
       setTalkshowData(res2.data.data);
     } catch (err) {
@@ -47,6 +46,8 @@ function Profile() {
                   <DataTable
                     columns={TicketDataColumn}
                     data={ticketData ? ticketData : []}
+                    search='namaKetua'
+                    page={1}
                   />
                 </TabsContent>
                 <TabsContent value='Talkshow'>
@@ -54,6 +55,7 @@ function Profile() {
                     columns={ProfileTalkshowDataColumn}
                     data={talkshowData ? talkshowData : []}
                     search='nama'
+                    page={1}
                   />
                 </TabsContent>
               </Tabs>

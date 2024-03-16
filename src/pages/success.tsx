@@ -5,7 +5,7 @@ function Index() {
   return (
     <div className='flex items-center justify-center h-screen'>
       <div className='p-1 rounded shadow-lg bg-gradient-to-r from-purple-500 via-green-500 to-blue-500'>
-        <div className='flex flex-col items-center p-4 space-y-2 bg-white'>
+        <div className='flex flex-col items-center p-4 space-y-2 bg-slate-100'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='text-green-600 w-28 h-28'
@@ -21,9 +21,9 @@ function Index() {
             />
           </svg>
           <h1 className='text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500'>
-            Arigatouu
+            Terima kasih
           </h1>
-          <p>
+          <p className='text-black'>
             Terima kasih telah mendaftar, Silahkan cek profil kamu untuk
             mendapatkan informasi lebih lanjut.
           </p>

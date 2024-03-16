@@ -7,7 +7,7 @@ const defaultMeta = {
   description:
     'Al-𝙃𝙞𝙠𝙢𝙖𝙝 Sport, Technology, Education, Ard and Business 𝘾𝙤𝙢𝙥𝙚𝙩𝙞𝙩𝙞𝙤𝙣',
   url: '',
-  image: '/images/logonobg.png',
+  image: '/logo.ico',
   type: 'website',
   robots: 'follow, index',
 };

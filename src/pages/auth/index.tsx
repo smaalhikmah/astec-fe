@@ -5,7 +5,7 @@ import Layout from '@/components/layout/Layout';
 export default withAuth(index, 'auth');
 function index() {
   return (
-    <Layout header='fixed'>
+    <Layout header='home'>
       <Seo templateTitle='Login' />
       <div className='min-h-screen md:h-screen w-full hero relative overflow-hidden flex justify-center items-center'>
         <div className='layout bg'>

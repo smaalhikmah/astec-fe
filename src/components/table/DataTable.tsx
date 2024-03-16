@@ -33,11 +33,17 @@ interface Props<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
   search?: string;
+  nextPage?: () => void;
+  prevPage?: () => void;
+  page?: number;
 }
 export default function DataTable<TData, TValue>({
   data,
   columns,
   search,
+  nextPage,
+  prevPage,
+  page,
 }: Props<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -167,16 +173,16 @@ export default function DataTable<TData, TValue>({
         <Button
           variant='outline'
           size='sm'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => prevPage && prevPage()}
+          disabled={page && page <= 1 ? true : false}
         >
           Previous
         </Button>
         <Button
           variant='outline'
           size='sm'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => nextPage && nextPage()}
+          disabled={data.length < 10}
         >
           Next
         </Button>

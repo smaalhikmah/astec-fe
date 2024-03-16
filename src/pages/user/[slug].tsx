@@ -7,7 +7,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api from '@/lib/axios-helper';
 import { DetailUserTicket } from '@/types/type';
@@ -44,34 +43,51 @@ function Index() {
           <div className='layout p-2 space-y-4'>
             {userTicket ? (
               <>
-                <p className='h1 text-center'>
+                <p className='md:h1 h2 text-center'>
                   Detail Peserta Lomba {userTicket.lomba.nama}
                 </p>
 
                 <div className='flex justify-between'>
-                  <div>
-                    <p>Order</p>
-                    <p>Asal Sekolah: {userTicket.order.asalSekolah}</p>
-                    <p>Provinsi Sekolah: {userTicket.order.provinsiSekolah}</p>
-                    <p>Bukti Pembayaran</p>
-                    <ImagePreview
-                      open={open}
-                      setOpen={setOpen}
-                      url={userTicket.order.buktiTf}
-                    />
+                  <div className='space-y-4'>
+                    <div className='space-y-2'>
+                      <p className='md:h1 h2'>Sekolah</p>
+                      <p>Asal Sekolah: {userTicket.order.asalSekolah}</p>
+                      <p>
+                        Provinsi Sekolah: {userTicket.order.provinsiSekolah}
+                      </p>
+                    </div>
+
+                    <div className='space-y-2'>
+                      <p className='md:h1 h2'>Bukti Pembayaran</p>
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={userTicket.order.buktiTf}
+                      />
+                    </div>
+
+                    <div className='space-y-2'>
+                      <p className='md:h1 h2'>Surat Rekomendasi</p>
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={userTicket.order.suratRekomendasi}
+                      />
+                    </div>
                   </div>
                   <div>
-                    <p className='h2'>
+                    <p className='md:h1 h2'>
                       Status:{' '}
                       {userTicket.order.approved ? (
-                        <span>Disetujui</span>
+                        <span className='text-green-600'>Disetujui</span>
                       ) : (
-                        <span>Pending</span>
+                        <span className='text-red-600'>Pending</span>
                       )}
                     </p>
                     {userTicket.order.approved && (
-                      <Button variant='link'>
+                      <div>
                         <Link
+                          className='text-left underline'
                           href={userTicket.order.ticketURL}
                           target='_blank'
                           rel='noopener noreferrer'
@@ -80,13 +96,13 @@ function Index() {
                         >
                           Download Tiket
                         </Link>
-                      </Button>
+                      </div>
                     )}
                   </div>
                 </div>
 
-                <div className='p-4'>
-                  <p className='h2'>Peserta</p>
+                <div>
+                  <p className='md:h1 h2'>Peserta</p>
                   <Accordion type='single' collapsible className='w-full'>
                     {userTicket.peserta.map((peserta, index) => {
                       return (
@@ -97,7 +113,7 @@ function Index() {
                           <AccordionContent>
                             <div>
                               <p className='h4'>NISN/NIK/NOMOR KARTU PELAJAR</p>
-                              <Input disabled value={peserta.namaLengkap} />
+                              <Input disabled value={peserta.nomorIdentitas} />
                             </div>
                             <div>
                               <p className='h4'>Nama Lengkap</p>
@@ -138,12 +154,12 @@ function Index() {
                   </Accordion>
                 </div>
 
-                <div className='p-4'>
+                <div>
                   {
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     userTicket.mentor && userTicket.mentor.length > 0 && (
                       <div>
-                        <p className='h2'>Pembimbing</p>
+                        <p className='md:h1 h2'>Pembimbing</p>
                         <Accordion type='single' collapsible className='w-full'>
                           {userTicket.mentor.map((mentor, index) => {
                             return (

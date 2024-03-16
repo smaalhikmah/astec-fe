@@ -1,18 +1,18 @@
 import React from 'react';
 import Header from './Header';
 import { Toaster } from 'react-hot-toast';
+import HomeHeader from './HomeHeader';
 
 interface Page {
   children: React.ReactNode;
   header?: string;
   className?: string;
 }
-export default function Layout({ children, header, className }: Page) {
+export default function Layout({ children, header }: Page) {
   return (
     <>
       <Toaster />
-      <Header header={header} className={className} />
-
+      {header === 'home' ? <HomeHeader /> : <Header />}
       {children}
     </>
   );

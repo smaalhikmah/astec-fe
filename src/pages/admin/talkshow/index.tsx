@@ -13,13 +13,14 @@ import toast from 'react-hot-toast';
 export default adminWithAuth(Index, 'all');
 function Index() {
   const [dataUser, setDataUser] = React.useState<TalkShow[]>([]);
+  const [page, setPage] = React.useState<number>(1);
   const router = useRouter();
   const { logout } = useAdminStore();
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const res = await api.get(`admin/order/talkshow?limit=1000`);
+        const res = await api.get(`admin/order/talkshow?page=${page}&limit=10`);
         setDataUser(res.data.data);
       } catch (err) {
         toast.error('Sesi anda Telah berakhir silahkan login kembali');
@@ -31,7 +32,16 @@ function Index() {
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page, router]);
+
+  function nextPage() {
+    setPage(page + 1);
+  }
+  function prevPage() {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  }
   return (
     <AdminLayout>
       <Seo templateTitle='Admin' />
@@ -43,6 +53,10 @@ function Index() {
               <DataTable
                 data={dataUser ? dataUser : []}
                 columns={TalkShowDataColumn}
+                search='nama'
+                nextPage={nextPage}
+                prevPage={prevPage}
+                page={page}
               />
             </div>
           </div>

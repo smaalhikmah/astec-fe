@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Links from '../button/Links';
 import ProfilButton from '../button/ProfilButton';
 import { motion } from 'framer-motion';
@@ -8,10 +8,19 @@ import useAuthStore from '@/store/useAuthStore';
 import ThemeButton from '../button/ThemeButton';
 import Link from 'next/link';
 import withAuth from '../hoc/withAuth';
+import { useRouter } from 'next/router';
 
-export default withAuth(Header, 'optional');
-function Header() {
+export default withAuth(HomeHeader, 'optional');
+function HomeHeader() {
+  const router = useRouter();
   const user = useAuthStore.useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.reload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const animation = {
     hidden: {
       x: '200',
@@ -29,7 +38,7 @@ function Header() {
   return (
     <nav
       className={cn(
-        'w-full h-[82px] flex bg-transparent z-10 overflow-hidden sticky ',
+        'w-full h-[82px] flex bg-transparent z-10 overflow-hidden fixed text-white',
       )}
     >
       <div className='flex justify-between w-full'>
@@ -67,7 +76,7 @@ function Header() {
           <ThemeButton />
           {user != null && user ? (
             <ProfilButton user={user} className='bg-yellow-900'>
-              {user.name}
+              {user.name!}
             </ProfilButton>
           ) : (
             <ProfilButton className='bg-yellow-900'>

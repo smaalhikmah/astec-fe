@@ -37,12 +37,12 @@ export default function Player12({ lomba, harga }: Player12Props) {
     defaultValues: {
       harga: harga,
       lomba: stepOne?.lomba || lomba,
-      nomorIdentitasKetua: '212121',
-      namaLengkapKetua: stepOne?.namaLengkapKetua || 'sasasa',
-      noTelponKetua: stepOne?.noTelponKetua || '232312',
-      emailKetua: stepOne?.emailKetua || 'dasdas@sasa.com',
-      provinsiSekolah: stepOne?.provinsiSekolah || 'dsdas',
-      asalSekolah: stepOne?.asalSekolah || 'dasdsa',
+      nomorIdentitasKetua: '',
+      namaLengkapKetua: stepOne?.namaLengkapKetua || '',
+      noTelponKetua: stepOne?.noTelponKetua || '',
+      emailKetua: stepOne?.emailKetua || '',
+      provinsiSekolah: stepOne?.provinsiSekolah || '',
+      asalSekolah: stepOne?.asalSekolah || '',
       scanKartuPelajarKetua: stepOne?.scanKartuPelajarKetua || {
         file: null as File | null,
         url: '',
@@ -55,23 +55,16 @@ export default function Player12({ lomba, harga }: Player12Props) {
         file: null as File | null,
         url: '',
       },
+      suratRekomendasi: stepOne?.suratRekomendasi || {
+        file: null as File | null,
+        url: '',
+      },
     },
   });
   function onSubmit(data: StepOneData) {
     setData({ step: 1, data });
     router.push('/competition/registration/step-2');
   }
-  // useEffect(() => {
-  //   if (stepOne) {
-  //     setSelectedImage({
-  //       scan: stepOne.scanKartuPelajarKetua?.[0] as File,
-  //       foto: stepOne.fotoKetua?.[0] as File,
-  //     });
-  //     form.setValue('scanKartuPelajarKetua', stepOne.scanKartuPelajarKetua);
-  //     form.setValue('fotoKetua', stepOne.fotoKetua);
-  //   }
-  // }, [form, stepOne]);
-
   return (
     <>
       <Seo templateTitle='Pendaftaran' />
@@ -90,7 +83,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                 <FormLabel>NISN/NIK/NOMOR KARTU PELAJAR</FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
                     placeholder='NISN/NIK/NOMOR KARTU PELAJAR...'
                     {...field}
                     value={field.value}
@@ -172,6 +164,47 @@ export default function Player12({ lomba, harga }: Player12Props) {
             )}
           />
 
+          <div>
+            <div
+              className={`flex justify-center items-center md:flex-[1] h-[fit-content]
+                        
+            `}
+            ></div>
+            <FormField
+              control={form.control}
+              name='suratRekomendasi'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Surat Rekomendasi </FormLabel>
+                  {form.getValues('suratRekomendasi.file') ? (
+                    <ImagePreview
+                      url={URL.createObjectURL(
+                        form.getValues('suratRekomendasi.file') as File,
+                      )}
+                      onDelete={() => deleteImage('suratRekomendasi', form)}
+                    />
+                  ) : (
+                    <div className='flex items-center justify-between'>
+                      <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                        <FaImage size={40} />
+                      </div>
+                    </div>
+                  )}
+
+                  <FormControl>
+                    <InputImage
+                      form={form}
+                      field={{
+                        ...field,
+                        name: 'suratRekomendasi',
+                      }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
           <div
             className={`flex  md:flex-[1] h-[fit-content] md:justify-between md:flex-row 
                         
@@ -244,7 +277,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                     }}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -283,7 +315,6 @@ export default function Player12({ lomba, harga }: Player12Props) {
                     }}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />

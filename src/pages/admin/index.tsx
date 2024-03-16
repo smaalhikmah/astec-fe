@@ -16,6 +16,8 @@ import toast from 'react-hot-toast';
 export default adminWithAuth(Index, 'all');
 function Index() {
   const [dataUser, setDataUser] = React.useState<UserData[]>([]);
+  const [select, setSelect] = React.useState<string>('Basket Putra');
+  const [page, setPage] = React.useState<number>(1);
   const [allCompetition, setAllCompetition] =
     React.useState<selectCompetition[]>();
 
@@ -36,10 +38,21 @@ function Index() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function nextPage() {
+    setPage(page + 1);
+  }
+  function prevPage() {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  }
+
   React.useEffect(() => {
-    async function fetchData() {
+    async function fetchData(id: string) {
       try {
-        const res = await api.get(`admin/order/competition?limit=1000`);
+        const res = await api.get(
+          `admin/order/competition?id=${id}&page=${page}`,
+        );
         setDataUser(res.data.data);
       } catch (err) {
         toast.error('Sesi anda Telah berakhir silahkan login kembali');
@@ -48,20 +61,39 @@ function Index() {
         }, 1000);
       }
     }
-    fetchData();
-  }, [router]);
+    if (allCompetition) {
+      if (select) {
+        allCompetition.filter((value) => {
+          if (value.lomba === select) {
+            fetchData(value.id);
+          }
+        });
+      }
+    }
+  }, [allCompetition, page, router, select]);
+
   return (
     <AdminLayout>
       <Seo templateTitle='Admin' />
       <main>
         <section className='mt-5'>
-          <div className='layout'>
+          <div className='layout '>
             <h1 className='mt-8 mb-7 text-4xl font-bold'>Dashboard</h1>
-            <Tabs defaultValue='e7760d1a-594d-4185-83e6-515fa0abde5a'>
-              <TabsList>
+            <Tabs
+              defaultValue='Basket Putra'
+              className='overflow-x-auto w-full'
+            >
+              <TabsList className='flex justify-start w-full overflow-x-auto'>
                 {allCompetition?.map((value) => {
                   return (
-                    <TabsTrigger key={value.id} value={value.id}>
+                    <TabsTrigger
+                      key={value.id}
+                      value={value.lomba}
+                      onClick={() => {
+                        setSelect(value.lomba);
+                        setPage(1);
+                      }}
+                    >
                       {value.lomba}
                     </TabsTrigger>
                   );
@@ -69,17 +101,20 @@ function Index() {
               </TabsList>
               {allCompetition?.map((value) => {
                 return (
-                  <TabsContent key={value.id} value={value.id}>
-                    <div className='w-full'>
+                  <TabsContent key={value.id} value={value.lomba}>
+                    <div>
                       <DataTable
                         data={
-                          dataUser
+                          dataUser && dataUser.length > 0
                             ? dataUser.filter((values) => {
                                 return values.lomba.id === value.id;
                               })
                             : []
                         }
                         columns={UserDataColumn}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                        page={page}
                       />
                     </div>
                   </TabsContent>

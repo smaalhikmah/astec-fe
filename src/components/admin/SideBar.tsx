@@ -19,7 +19,7 @@ function Sidebar() {
     try {
       logout();
       toast.success('Logout Success');
-      router.push('/');
+      router.push('/auth/admin');
     } catch (error) {
       toast.error('Logout Failed');
     }

@@ -23,10 +23,10 @@ import Alert from '@/components/button/Alert';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
+import InputImage from '@/components/button/InputImage';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
-import InputImage from '@/components/button/InputImage';
 
 interface Player2Props {
   max: number;
@@ -42,14 +42,18 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
     resolver: zodResolver(badminton),
     defaultValues: {
       lomba: lomba,
-      provinsiSekolah: 'dsda',
-      asalSekolah: 'dsadsa',
+      provinsiSekolah: '',
+      asalSekolah: '',
+      suratRekomendasi: {
+        file: null,
+        url: '',
+      },
       anggota: [
         {
-          nomorIdentitas: '2121',
-          namaLengkap: 'dsadsa',
-          noTelpon: '2321',
-          email: 'ddas@asa.com',
+          nomorIdentitas: '',
+          namaLengkap: '',
+          noTelpon: '',
+          email: '',
           isKetua: true,
           scanKartuPelajar: {
             file: null,
@@ -106,6 +110,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
       },
     );
   }
+
   return (
     <>
       <Form {...form}>
@@ -123,7 +128,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                 <FormLabel>NISN/NIK/NOMOR KARTU PELAJAR</FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
                     placeholder='NISN/NIK/NOMOR KARTU PELAJAR...'
                     {...field}
                     value={field.value}
@@ -204,7 +208,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                     <FormLabel>NISN/NIK/NOMOR KARTU PELAJAR</FormLabel>
                     <FormControl>
                       <Input
-                        type='number'
                         disabled={index === 0}
                         placeholder='Nama...'
                         {...field}
@@ -240,7 +243,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                   <FormItem>
                     <FormLabel>No telpon</FormLabel>
                     <FormControl>
-                      <Input type='number' placeholder='08...' {...field} />
+                      <Input placeholder='08...' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -263,6 +266,48 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                   </FormItem>
                 )}
               />
+
+              <div>
+                <div
+                  className={`flex justify-center items-center md:flex-[1] h-[fit-content]
+                        
+            `}
+                ></div>
+                <FormField
+                  control={form.control}
+                  name='suratRekomendasi'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Surat Rekomendasi </FormLabel>
+                      {form.getValues('suratRekomendasi.file') ? (
+                        <ImagePreview
+                          url={URL.createObjectURL(
+                            form.getValues('suratRekomendasi.file') as File,
+                          )}
+                          onDelete={() => deleteImage('suratRekomendasi', form)}
+                        />
+                      ) : (
+                        <div className='flex items-center justify-between'>
+                          <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                            <FaImage size={40} />
+                          </div>
+                        </div>
+                      )}
+
+                      <FormControl>
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: 'suratRekomendasi',
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <div>
                 <div
                   className={`flex justify-center items-center md:flex-[1] h-[fit-content]
@@ -540,9 +585,14 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
             />
           </div>
 
-          <Button disabled={form.formState.isSubmitting} type='submit'>
-            Lanjut
-          </Button>
+          <Alert
+            disabled={form.formState.isSubmitting}
+            onclick={() => form.handleSubmit(onSubmit)()}
+            placeholder='Selesai'
+            message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+            variant='default'
+            className='bg-green-500 hover:bg-green-600'
+          />
         </form>
       </Form>
       <DevTool control={form.control} />

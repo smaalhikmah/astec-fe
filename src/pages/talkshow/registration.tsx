@@ -140,7 +140,6 @@ function Registration() {
                       <FormLabel>No telpon</FormLabel>
                       <FormControl>
                         <Input
-                          type='number'
                           placeholder='08...'
                           {...field}
                           onChange={(e) => {
@@ -288,9 +287,14 @@ function Registration() {
               />
             </div>
 
-            <Button disabled={form.formState.isSubmitting} type='submit'>
-              Lanjut
-            </Button>
+            <Alert
+              disabled={form.formState.isSubmitting}
+              onclick={() => form.handleSubmit(onSubmit)()}
+              placeholder='Selesai'
+              message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+              variant='default'
+              className='bg-green-500 hover:bg-green-600'
+            />
           </form>
         </Form>
       </div>

@@ -3,7 +3,6 @@
 
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
 
 import toast, { Toaster } from 'react-hot-toast';
@@ -21,13 +20,13 @@ import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 import { Button } from './ui/button';
 import { EyeIcon, EyeOff } from 'lucide-react';
+import { useRouter } from 'next/router';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
   const router = useRouter();
   const [passwordShown, setPasswordShown] = useState(false);
-
   const [variant, setVariant] = useState<Variant>('LOGIN');
   const [isLoading, setIsLoading] = useState(false);
   const login = useAuthStore.useLogin();
@@ -97,10 +96,6 @@ const AuthForm = () => {
             setIsLoading(false);
             return user.data;
           }),
-        // .then((user) => {
-        //   if (user.role === 'User') return router.push('/');
-        //   return router.push('/admin');
-        // }),
         {
           ...DEFAULT_TOAST_MESSAGE,
           success: 'Successfully logged in',

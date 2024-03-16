@@ -21,7 +21,9 @@ export async function uploadImage(
   params: File | undefined,
   form: any,
   name: string,
+  setloading?: (value: boolean) => void,
 ) {
+  if (setloading) setloading(true);
   if (params?.type && !ACCEPTED_IMAGE_MIME_TYPES.includes(params.type)) {
     return toast.error('File tidak didukung');
   }
@@ -39,6 +41,7 @@ export async function uploadImage(
       'Content-Type': 'multipart/form-data',
     },
   });
+  setloading && setloading(false);
   return form.setValue(name, {
     file: params,
     url: res.data.data.img_url,
@@ -86,6 +89,7 @@ export function formFormat(data: any) {
     provinsiSekolah: data.provinsiSekolah,
     asalSekolah: data.asalSekolah,
     pembimbing: pembimbing,
+    suratRekomendasi: data.suratRekomendasi.url,
   };
   return formData;
 }

@@ -69,10 +69,23 @@ function Index() {
                         url={dataUser.order.buktiTf}
                       />
                     </div>
+                    <div>
+                      <p className='h2'>Surat Rekomendasi</p>
+                      <ImagePreview
+                        open={open}
+                        setOpen={setOpen}
+                        url={dataUser.order.suratRekomendasi}
+                      />
+                    </div>
                   </div>
                   <div>
                     <p className='h2'>
-                      Status: <span className='text-red-600'>Pending</span>
+                      Status:{' '}
+                      <span className='text-red-600'>
+                        {dataUser.updatedAt
+                          ? 'Sudah di setujui'
+                          : 'Belum di setujui'}
+                      </span>
                     </p>
                     <Alert
                       onclick={() => approved(slug as string)}
@@ -84,7 +97,7 @@ function Index() {
                   </div>
                 </div>
 
-                <div className='p-4'>
+                <div>
                   <p className='h2'>Peserta</p>
                   <Accordion type='single' collapsible className='w-full'>
                     {dataUser.peserta.map((peserta, index) => {
@@ -96,7 +109,7 @@ function Index() {
                           <AccordionContent>
                             <div>
                               <p className='h4'>NISN/NIK/NOMOR KARTU PELAJAR</p>
-                              <Input disabled value={peserta.namaLengkap} />
+                              <Input disabled value={peserta.nomorIdentitas} />
                             </div>
                             <div>
                               <p className='h4'>Nama Lengkap</p>
@@ -137,7 +150,7 @@ function Index() {
                   </Accordion>
                 </div>
 
-                <div className='p-4'>
+                <div>
                   {
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     dataUser.mentor && dataUser.mentor.length > 0 && (

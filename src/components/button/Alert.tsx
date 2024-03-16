@@ -17,6 +17,7 @@ interface AlertProps {
   message?: string;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
   variant?:
     | 'default'
     | 'destructive'
@@ -33,6 +34,7 @@ function Alert({
   placeholder,
   className,
   variant,
+  disabled,
 }: AlertProps) {
   return (
     <AlertDialog>
@@ -40,6 +42,7 @@ function Alert({
         <Button
           className={className}
           variant={variant ? variant : 'destructive'}
+          disabled={disabled}
         >
           {placeholder ?? 'Hapus'}
         </Button>

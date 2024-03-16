@@ -17,6 +17,7 @@ export const CompetitionData = [
       '/images/competition/basket-putra/13.webp',
       '/images/competition/basket-putra/14.webp',
     ],
+    contact: ['farah (082338846611)', 'lia (087862970686)'],
   },
   {
     id: 2,
@@ -36,6 +37,7 @@ export const CompetitionData = [
       '/images/competition/basket-putri/16.webp',
       '/images/competition/basket-putri/17.webp',
     ],
+    contact: ['aisha (082210004154)', 'anenda (087764507272)'],
   },
   {
     id: 3,
@@ -55,6 +57,7 @@ export const CompetitionData = [
       '/images/competition/mini-soccer/22.webp',
       '/images/competition/mini-soccer/23.webp',
     ],
+    contact: ['callista (081234694230)', 'kayla (081357287744)'],
   },
   {
     id: 4,
@@ -74,10 +77,11 @@ export const CompetitionData = [
       '/images/competition/badminton/19.webp',
       '/images/competition/badminton/20.webp',
     ],
+    contact: ['najwa(082230785536)', 'rayya(081217744889)'],
   },
   {
     id: 5,
-    image: '/images/hero.jpg',
+    image: '/images/competition/business-plan/hero.webp',
     gender: 'Male/Female',
     grade: 'sma/smk/MA sederajat',
     price: 150000,
@@ -94,10 +98,11 @@ export const CompetitionData = [
       '/images/competition/business-plan/26.webp',
       '/images/competition/business-plan/27.webp',
     ],
+    contact: ['saffana (0821-3299-1856)'],
   },
   {
     id: 6,
-    image: '/images/competition/short-movie/short.webp',
+    image: '/images/competition/short-movie/movie.webp',
     gender: 'Male/Female',
     grade: 'sma/smk/MA sederajat',
     price: 100000,
@@ -112,6 +117,7 @@ export const CompetitionData = [
       '/images/competition/short-movie/10.webp',
       '/images/competition/short-movie/11.webp',
     ],
+    contact: ['diffa (085337288418)', 'feli (082334707098)'],
   },
   {
     id: 7,
@@ -131,6 +137,7 @@ export const CompetitionData = [
       '/images/competition/english-speech/4.webp',
       '/images/competition/english-speech/5.webp',
     ],
+    contact: ['aisha (082210004154)', 'anenda (087764507272)'],
   },
   {
     id: 8,
@@ -150,6 +157,7 @@ export const CompetitionData = [
       '/images/competition/essay/8.webp',
       '/images/competition/essay/9.webp',
     ],
+    contact: ['aura (082141261566)'],
   },
   {
     id: 9,
@@ -170,5 +178,6 @@ export const CompetitionData = [
       '/images/competition/english-speech/5.webp',
       '/images/competition/english-speech/6.webp',
     ],
+    contact: ['yasmin (0821-3148-4804)'],
   },
 ];

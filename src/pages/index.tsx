@@ -69,7 +69,7 @@ function Home() {
     }),
   );
   return (
-    <Layout header='fixed' className='text-white'>
+    <Layout header='home'>
       <Seo templateTitle='Home' />
       <div className='min-h-screen md:h-screen w-full hero relative overflow-hidden'>
         <div className='layout space-x-4 pt-20 space-y-10 md:space-y-0 md:pt-0 h-full flex flex-col justify-center items-center md:flex-row'>
@@ -98,7 +98,7 @@ function Home() {
               variants={animation}
               className='flex flex-col space-y-2'
             >
-              <p className='h3 text-white text-justify break-all '>
+              <p className='h3 text-white md:text-justify md:break-after-left  '>
                 ASTEC 2024 SMA AL HIKMAH SURABAYA siap menjadi ajang kalian
                 untuk terjun dalam aksi penuh adrenalin! Mari bergabung dalam
                 lomba-lomba seru kami. Tunjukkan skill terbaikmu, raih gelar
@@ -116,13 +116,13 @@ function Home() {
               {user ? (
                 <div className='flex space-x-4'>
                   <ArrowButton
-                    className='bg-yellow-200 text-black max-w-40 h-10'
+                    className='bg-yellow-200 text-black max-w-40 md:h-10'
                     href='/competition/registration'
                   >
                     Daftar lomba
                   </ArrowButton>
                   <ArrowButton
-                    className='bg-yellow-200 text-black max-w-64 h-10'
+                    className='bg-yellow-200 text-black max-w-64 md:h-10'
                     href='/talkshow/registration'
                   >
                     Daftar Film Taklshow

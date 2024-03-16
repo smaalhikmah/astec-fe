@@ -68,6 +68,9 @@ export default function StepThree() {
       buktiTf: allData.buktiTf,
       provinsiSekolah: allData.provinsiSekolah as string,
       pembimbing: allData.pembimbing,
+      suratRekomendasi: allData.suratRekomendasi as z.infer<
+        typeof badminton
+      >['suratRekomendasi'],
       anggota: [
         {
           namaLengkap: allData.namaLengkapKetua as string,
@@ -240,6 +243,7 @@ export default function StepThree() {
             </div>
             <div className='flex space-x-4'>
               <Button
+                type='button'
                 onClick={() => {
                   router.push('/competition/registration/step-2');
                 }}
@@ -247,7 +251,13 @@ export default function StepThree() {
                 Kembali
               </Button>
 
-              <Button type='submit'>Lanjut</Button>
+              <Alert
+                onclick={() => form.handleSubmit(onSubmit)()}
+                placeholder='Selesai'
+                message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+                variant='default'
+                className='bg-green-500 hover:bg-green-600'
+              />
             </div>
           </form>
         </Form>

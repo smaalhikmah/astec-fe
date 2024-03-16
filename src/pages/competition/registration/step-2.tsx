@@ -125,7 +125,6 @@ export default function StepTwo() {
             <div>
               <p className='h1 '>Daftar Anggota</p>
             </div>
-            <p>{form.getValues('anggota').length}</p>
 
             <Accordion type='single' collapsible className='w-3/4 h-screen'>
               <Form {...form}>
@@ -151,7 +150,7 @@ export default function StepTwo() {
                               {' '}
                               Anggota {`${i + 1}`}
                               {i === 0 ? (
-                                <div className='absolute top-3 -right-24 flex flex-col text-white '>
+                                <div className='absolute top-3 -right-24 flex flex-col '>
                                   <Button
                                     type='button'
                                     variant='ghost'
@@ -192,7 +191,6 @@ export default function StepTwo() {
                                 </FormLabel>
                                 <FormControl>
                                   <Input
-                                    type='number'
                                     placeholder='08...'
                                     {...field}
                                     onChange={(e) => {
@@ -226,7 +224,6 @@ export default function StepTwo() {
                                 <FormLabel>No telpon</FormLabel>
                                 <FormControl>
                                   <Input
-                                    type='number'
                                     placeholder='08...'
                                     {...field}
                                     onChange={(e) => {

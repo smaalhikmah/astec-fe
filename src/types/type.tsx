@@ -49,6 +49,7 @@ type Order = {
   provinsiSekolah: string;
   approved: boolean;
   ticketURL: string;
+  suratRekomendasi: string;
 };
 
 export type DetailUserTicket = {

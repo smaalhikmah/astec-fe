@@ -7,7 +7,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api from '@/lib/axios-helper';
 import { DetailTalkShowProfile } from '@/types/type';
@@ -44,18 +43,12 @@ function Index() {
           <div className='layout p-2 space-y-4'>
             {userTicket ? (
               <>
-                <p className='h1 text-center'>Detail Peserta Film Talk</p>
+                <p className='md:h1 h2 text-center'>Detail Peserta Film Talk</p>
 
-                <div className='flex justify-between'>
+                <div className='flex justify-between space-x-2'>
                   <div className='space-y-4'>
                     <div>
-                      <p className='h2'>Detail </p>
-                      {/* <p>Asal Sekolah: {userTicket.order.asalSekolah}</p>
-                      <p>Provinsi Sekolah: {userTicket.order.provinsiSekolah}</p> */}
-                    </div>
-
-                    <div>
-                      <p className='h2'>Bukti Pembayaran</p>
+                      <p className='md:h1 h2'>Bukti Pembayaran</p>
                       <ImagePreview
                         open={open}
                         setOpen={setOpen}
@@ -63,16 +56,19 @@ function Index() {
                       />
                     </div>
                   </div>
-                  <div className='flex space-x-4'>
-                    <p className='h2'>
+                  <div>
+                    <p className='md:h1 h2'>
                       Status:{' '}
-                      <span>
-                        {userTicket.order.approved ? 'Disetujui' : 'Pending'}
-                      </span>
+                      {userTicket.order.approved ? (
+                        <span className='text-green-600'>Disetujui</span>
+                      ) : (
+                        <span className='text-red-600'>Pending</span>
+                      )}
                     </p>
-                    {userTicket.order.ticketURL && (
-                      <Button variant='link'>
+                    {userTicket.order.approved && (
+                      <div>
                         <Link
+                          className='text-left underline'
                           href={userTicket.order.ticketURL}
                           target='_blank'
                           rel='noopener noreferrer'
@@ -81,13 +77,13 @@ function Index() {
                         >
                           Download Tiket
                         </Link>
-                      </Button>
+                      </div>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <p className='h2'>Peserta</p>
+                  <p className='md:h1 h2'>Peserta</p>
                   <Accordion type='single' collapsible className='w-full'>
                     {userTicket.participants.map((peserta, index) => {
                       return (

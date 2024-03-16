@@ -113,8 +113,17 @@ function Index() {
                       </Button>
                       <br />
                     </div>
+                    <div>
+                      <p className='h3'>Contact Person : </p>
+                      {competition.contact.map((item, index) => {
+                        return (
+                          <p key={index} className='italic break-all'>
+                            {item}
+                          </p>
+                        );
+                      })}
+                    </div>
 
-                    <p className='italic'>contact person : 99786696986</p>
                     {!user && (
                       <p className='italic text-red-700 font-bold animate-pulse'>
                         Login untuk mendaftar
