@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaImage } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -61,6 +61,9 @@ export default function Player12({ lomba, harga }: Player12Props) {
       },
     },
   });
+  useEffect(() => {
+    form.reset();
+  }, [form, lomba]);
   function onSubmit(data: StepOneData) {
     setData({ step: 1, data });
     router.push('/competition/registration/step-2');

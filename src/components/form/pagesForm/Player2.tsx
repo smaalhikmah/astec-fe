@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
@@ -93,6 +93,9 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
     },
   });
 
+  useEffect(() => {
+    form.reset();
+  }, [form, lomba]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   function onSubmit(data: z.infer<typeof badminton>) {
@@ -195,6 +198,47 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
               </FormItem>
             )}
           />
+
+          <div>
+            <div
+              className={`flex justify-center items-center md:flex-[1] h-[fit-content]
+                        
+            `}
+            ></div>
+            <FormField
+              control={form.control}
+              name='suratRekomendasi'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Surat Rekomendasi </FormLabel>
+                  {form.getValues('suratRekomendasi.file') ? (
+                    <ImagePreview
+                      url={URL.createObjectURL(
+                        form.getValues('suratRekomendasi.file') as File,
+                      )}
+                      onDelete={() => deleteImage('suratRekomendasi', form)}
+                    />
+                  ) : (
+                    <div className='flex items-center justify-between'>
+                      <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                        <FaImage size={40} />
+                      </div>
+                    </div>
+                  )}
+
+                  <FormControl>
+                    <InputImage
+                      form={form}
+                      field={{
+                        ...field,
+                        name: 'suratRekomendasi',
+                      }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
           <p className='h3 pt-4'>Data diri Pemain </p>
           <span>Maksimal Pemain {max}</span>
           {fields.map((field, index) => (
@@ -209,7 +253,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                     <FormControl>
                       <Input
                         disabled={index === 0}
-                        placeholder='Nama...'
+                        placeholder='123...'
                         {...field}
                         value={field.value}
                       />
@@ -266,47 +310,6 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                   </FormItem>
                 )}
               />
-
-              <div>
-                <div
-                  className={`flex justify-center items-center md:flex-[1] h-[fit-content]
-                        
-            `}
-                ></div>
-                <FormField
-                  control={form.control}
-                  name='suratRekomendasi'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Surat Rekomendasi </FormLabel>
-                      {form.getValues('suratRekomendasi.file') ? (
-                        <ImagePreview
-                          url={URL.createObjectURL(
-                            form.getValues('suratRekomendasi.file') as File,
-                          )}
-                          onDelete={() => deleteImage('suratRekomendasi', form)}
-                        />
-                      ) : (
-                        <div className='flex items-center justify-between'>
-                          <div className='p-3 bg-slate-200  justify-center items-center flex'>
-                            <FaImage size={40} />
-                          </div>
-                        </div>
-                      )}
-
-                      <FormControl>
-                        <InputImage
-                          form={form}
-                          field={{
-                            ...field,
-                            name: 'suratRekomendasi',
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
 
               <div>
                 <div
@@ -499,7 +502,7 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                         <FormLabel>Email Pembimbing {index + 1}</FormLabel>
                         <FormDescription />
                         <FormControl>
-                          <Input placeholder='Nama...' {...field} />
+                          <Input placeholder='example@gmail.com' {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
