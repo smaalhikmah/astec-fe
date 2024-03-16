@@ -25,10 +25,12 @@ export async function uploadImage(
 ) {
   if (setloading) setloading(true);
   if (params?.type && !ACCEPTED_IMAGE_MIME_TYPES.includes(params.type)) {
+    setloading && setloading(false);
     return toast.error('File tidak didukung');
   }
   if (params?.size && params.size > MAX_FILE_SIZE) {
     toast.error('Ukuran file terlalu besar');
+    setloading && setloading(false);
     return form.setValue(name, {
       file: null,
       url: '',
