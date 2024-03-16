@@ -9,6 +9,12 @@ const nextConfig = {
         port: '8000',
         pathname: '/image/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.smaalhikmah.com',
+        port: '',
+        pathname: '/image/',
+      },
     ],
   }
 };
