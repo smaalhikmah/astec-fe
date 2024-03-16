@@ -38,7 +38,9 @@ export const step1 = z.object({
 
 const member = z.object({
   nomorIdentitas: z.string().regex(phoneRegex, 'Masa kek gitu'),
-  namaLengkap: z.string().min(2, {}),
+  namaLengkap: z.string().min(2, {
+    message: 'Nama harus diisi',
+  }),
   noTelpon: z.string().regex(phoneRegex, 'Masa kek gitu'),
   email: z.string().email(),
   scanKartuPelajar: foto,

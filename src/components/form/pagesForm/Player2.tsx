@@ -69,11 +69,11 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
           },
         },
       ],
-
       buktiTf: {
         file: null,
         url: '',
       },
+      pembimbing: [],
     },
   });
 
