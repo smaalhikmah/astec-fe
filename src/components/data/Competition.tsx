@@ -2,7 +2,7 @@ export const CompetitionData = [
   {
     id: 1,
     image: '/images/competition/basket-putra/basket.webp',
-    gender: 'Male',
+    gender: 'Laki-laki',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
     title: 'Basket Putra',
@@ -22,7 +22,7 @@ export const CompetitionData = [
   {
     id: 2,
     image: '/images/competition/basket-putri/basket.webp',
-    gender: 'Female',
+    gender: 'Perempuan',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
     title: 'Basket Putri',
@@ -42,7 +42,7 @@ export const CompetitionData = [
   {
     id: 3,
     image: '/images/competition/mini-soccer/mini.webp',
-    gender: 'Male',
+    gender: 'Laki-laki',
     grade: 'sma/smk/MA sederajat',
     price: 350000,
     title: 'Mini Soccer',
@@ -62,7 +62,7 @@ export const CompetitionData = [
   {
     id: 4,
     image: '/images/competition/badminton/badminton.webp',
-    gender: 'Male',
+    gender: 'Laki-laki',
     grade: 'sma/smk/MA sederajat',
     price: 100000,
     title: 'Badminton',
@@ -82,7 +82,7 @@ export const CompetitionData = [
   {
     id: 5,
     image: '/images/competition/business-plan/hero.webp',
-    gender: 'Male/Female',
+    gender: 'Laki-laki/Perempuan',
     grade: 'sma/smk/MA sederajat',
     price: 150000,
     title: 'Business Plan Competition',
@@ -103,7 +103,7 @@ export const CompetitionData = [
   {
     id: 6,
     image: '/images/competition/short-movie/movie.webp',
-    gender: 'Male/Female',
+    gender: 'Laki-laki/Perempuan',
     grade: 'sma/smk/MA sederajat',
     price: 100000,
     title: 'Short Movie Competition',
@@ -122,7 +122,7 @@ export const CompetitionData = [
   {
     id: 7,
     image: '/images/filmm.jpg',
-    gender: 'Male/Female',
+    gender: 'Laki-laki/Perempuan',
     grade: '',
     price: 100000,
     title: 'FILMTALK',
@@ -142,8 +142,8 @@ export const CompetitionData = [
   {
     id: 8,
     image: '/images/competition/essay/essay.webp',
-    gender: 'Male/Female',
-    grade: '',
+    gender: 'Laki-laki/Perempuan',
+    grade: 'sma/smk/MA sederajat',
     price: 80000,
     title: 'Essay Competition',
     description:
@@ -162,8 +162,8 @@ export const CompetitionData = [
   {
     id: 9,
     image: '/images/competition/english-speech/english.webp',
-    gender: 'Male/Female',
-    grade: '',
+    gender: 'Laki-laki/Perempuan',
+    grade: 'SMP/Mts Sederajat',
     price: 50000,
     title: 'English Speech',
     description:

@@ -54,7 +54,7 @@ function Index() {
               <h1 className='mt-8 text-4xl font-bold'>{competition.title}</h1>
 
               <p className='text-sm text-gray-600 dark:text-gray-300'>
-                {competition.gender === 'Male' ? 'Laki-laki' : 'Perempuan'}
+                {competition.gender}
               </p>
               <p className='text-sm text-gray-600 dark:text-gray-300'>
                 {competition.grade}
