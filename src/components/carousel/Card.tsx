@@ -41,8 +41,8 @@ export default function Cards<T extends Competition>({ data }: Props<T>) {
             <p className='h3 font-bold'>{data.title}</p>
           </CardTitle>
         </CardHeader>
-        <CardContent className='md:h-48 h-36 overflow-hidden text-pretty text-justify '>
-          <p className=' text-gray-500 text-justify break-all'>
+        <CardContent className='md:h-48 h-36 overflow-hidden'>
+          <p className=' text-gray-500 text-left text-ellipsis'>
             {data.description}
           </p>
         </CardContent>
