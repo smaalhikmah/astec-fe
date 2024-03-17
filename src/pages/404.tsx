@@ -4,11 +4,11 @@ import React from 'react';
 
 export default function Custom404() {
   return (
-    <section>
+    <section className='h-screen w-full relative'>
       <Seo templateTitle='404' />
-      <div className='bg-black text-white'>
-        <div className='flex h-screen'>
-          <div className='m-auto text-center'>
+      <div className=' text-white w-full h-screen'>
+        <div className='flex h-screen '>
+          <div className='md:m-auto mt-[60vw] text-center'>
             <div>
               <svg
                 width='631'
