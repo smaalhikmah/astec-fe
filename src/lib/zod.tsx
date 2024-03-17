@@ -22,26 +22,32 @@ export const step1 = z.object({
     message: 'Lomba harus diisi.',
   }),
   namaLengkapKetua: z.string().min(2, {
-    message: 'namaLengkapKetua must be at least 2 characters.',
+    message: 'Nama lengkap harus diisi.',
   }),
-  noTelponKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  noTelponKetua: z.string().regex(phoneRegex, 'Pastikan nomor sudah benar'),
   emailKetua: z.string().email(),
-  provinsiSekolah: z.string().min(2, {}),
-  asalSekolah: z.string().min(2, {}),
+  provinsiSekolah: z.string().min(2, {
+    message: 'Provinsi sekolah harus diisi.',
+  }),
+  asalSekolah: z.string().min(2, {
+    message: 'Asal sekolah harus diisi.',
+  }),
   scanKartuPelajarKetua: foto,
   fotoKetua: foto,
   buktiFollow: foto,
   suratRekomendasi: foto,
-  nomorIdentitasKetua: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  nomorIdentitasKetua: z
+    .string()
+    .regex(phoneRegex, 'Pastikan nomor sudah benar'),
   harga: z.string().min(2, {}),
 });
 
 const member = z.object({
-  nomorIdentitas: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  nomorIdentitas: z.string().regex(phoneRegex, 'Pastikan nomor sudah benar'),
   namaLengkap: z.string().min(2, {
-    message: 'Nama harus diisi',
+    message: 'Nama lengkap harus diisi',
   }),
-  noTelpon: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  noTelpon: z.string().regex(phoneRegex, 'Pastikan nomor sudah benar'),
   email: z.string().email(),
   scanKartuPelajar: foto,
   foto: foto,
@@ -54,7 +60,7 @@ export const step2 = z.object({
 });
 
 export const pembimbing = z.object({
-  nomorIdentitas: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  nomorIdentitas: z.string().regex(phoneRegex, 'Pastikan nomor sudah benar'),
   scanKTP: foto,
   nama: z.string().min(2, {
     message: 'Nama wajib diisi',
@@ -86,9 +92,12 @@ const talkshow = z.object({
     .email({
       message: 'Email tidak valid',
     }),
-  nomorTelepon: z.string().regex(phoneRegex, 'Masa kek gitu').min(2, {
-    message: 'Nomor telepon wajib diisi',
-  }),
+  nomorTelepon: z
+    .string()
+    .regex(phoneRegex, 'Pastikan nomor sudah benar')
+    .min(2, {
+      message: 'Nomor telepon wajib diisi',
+    }),
   jenisKelamin: z
     .string({
       required_error: 'Jenis kelamin wajib diisi',
@@ -110,8 +119,12 @@ export const badminton = z.object({
   lomba: z.string().min(2, {
     message: 'Lomba harus diisi.',
   }),
-  provinsiSekolah: z.string().min(2, {}),
-  asalSekolah: z.string().min(2, {}),
+  provinsiSekolah: z.string().min(2, {
+    message: 'Provinsi sekolah harus diisi.',
+  }),
+  asalSekolah: z.string().min(2, {
+    message: 'Asal sekolah harus diisi.',
+  }),
   anggota: z.array(member),
   pembimbing: z.array(pembimbing).optional(),
   buktiTf: foto,
