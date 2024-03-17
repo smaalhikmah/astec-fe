@@ -61,7 +61,12 @@ export default function Index() {
 
               <div className='py-4 text-justify'>
                 <div className='md:sticky top-36 md:flex md:flex-col space-y-2 '>
-                  <p className='italic'>contact person : -</p>
+                  <div>
+                    <p className='h3'>Contact Person : </p>
+
+                    <p className='italic break-all'>almi: +6281331102142</p>
+                  </div>
+
                   {!user && (
                     <p className='italic text-red-700 font-bold animate-pulse'>
                       Login untuk mendaftar
