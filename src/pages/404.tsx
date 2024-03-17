@@ -270,7 +270,7 @@ export default function Custom404() {
               </svg>
             </div>
             <p className='text-sm md:text-base text-yellow-300 p-2 mb-4'>
-              wADUH halaman yang kamu cari tidak ditemukan broww
+              Whooopss halaman yang kamu cari tidak ditemukan
             </p>
             <Link
               href='/'
