@@ -82,6 +82,8 @@ export function formFormat(data: any) {
     return {
       name: item.nama,
       email: item.email,
+      nomorIdentitas: item.nomorIdentitas,
+      scanKTP: item.scanKTP.url,
     };
   });
   const formData = {

@@ -40,10 +40,20 @@ export default function StepThree() {
         {
           nama: stepThree?.pembimbing[0]?.nama || '',
           email: stepThree?.pembimbing[0]?.email || '',
+          nomorIdentitas: stepThree?.pembimbing[0]?.nomorIdentitas || '',
+          scanKTP: stepThree?.pembimbing[0]?.scanKTP || {
+            file: null as File | null,
+            url: '',
+          },
         },
         {
           nama: stepThree?.pembimbing[1]?.nama || '',
           email: stepThree?.pembimbing[1]?.email || '',
+          nomorIdentitas: stepThree?.pembimbing[1]?.nomorIdentitas || '',
+          scanKTP: stepThree?.pembimbing[1]?.scanKTP || {
+            file: null as File | null,
+            url: '',
+          },
         },
       ],
       buktiTf: stepThree?.buktiTf || {
@@ -137,6 +147,22 @@ export default function StepThree() {
             {fields.map((field, index) => (
               <div key={index}>
                 <p className='h3 pt-4'>Data diri pembimbing {index + 1}</p>
+
+                <FormField
+                  control={form.control}
+                  name={`pembimbing.${index}.nomorIdentitas`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>NONOR KTP {index + 1}</FormLabel>
+                      <FormDescription />
+                      <FormControl>
+                        <Input placeholder='NOMOR KTP...' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name={`pembimbing.${index}.nama`}
@@ -151,6 +177,7 @@ export default function StepThree() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name={`pembimbing.${index}.email`}
@@ -165,6 +192,79 @@ export default function StepThree() {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name={`pembimbing.${index}.scanKTP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Upload Scan KTP </FormLabel>
+                      {form.getValues(`pembimbing.${index}.scanKTP.file`) ? (
+                        <ImagePreview
+                          url={URL.createObjectURL(
+                            form.getValues(
+                              `pembimbing.${index}.scanKTP.file`,
+                            ) as File,
+                          )}
+                          onDelete={() =>
+                            deleteImage(`pembimbing.${index}.scanKTP`, form)
+                          }
+                        />
+                      ) : (
+                        <div className='flex items-center justify-between'>
+                          <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                            <FaImage size={40} />
+                          </div>
+                        </div>
+                      )}
+                      <FormControl>
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: `pembimbing.${index}.scanKTP`,
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`pembimbing.${index}.scanKTP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Upload Scan KTP </FormLabel>
+                      {form.getValues(`pembimbing.${index}.scanKTP.file`) ? (
+                        <ImagePreview
+                          url={URL.createObjectURL(
+                            form.getValues(
+                              `pembimbing.${index}.scanKTP.file`,
+                            ) as File,
+                          )}
+                          onDelete={() =>
+                            deleteImage(`pembimbing.${index}.scanKTP`, form)
+                          }
+                        />
+                      ) : (
+                        <div className='flex items-center justify-between'>
+                          <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                            <FaImage size={40} />
+                          </div>
+                        </div>
+                      )}
+                      <FormControl>
+                        <InputImage
+                          form={form}
+                          field={{
+                            ...field,
+                            name: `pembimbing.${index}.scanKTP`,
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
             ))}
             <div className='flex justify-between'>
@@ -174,6 +274,11 @@ export default function StepThree() {
                     append({
                       nama: '',
                       email: '',
+                      nomorIdentitas: '',
+                      scanKTP: {
+                        file: null,
+                        url: '',
+                      },
                     });
                   }}
                 >

@@ -42,4 +42,6 @@ export type Anggota = {
 export type Pembimbing = {
   nama: string;
   email: string;
+  nomorIdentitas: string;
+  scanKTP: foto;
 };

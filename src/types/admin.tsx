@@ -35,7 +35,6 @@ export type DetailUserData = {
   mentor: Mentor[];
   order: Order;
   peserta: Peserta[];
-  updatedAt: string;
 };
 
 export type Lomba = {
@@ -46,6 +45,8 @@ export type Lomba = {
 export type Mentor = {
   name: string;
   email: string;
+  nomorIdentitas: string;
+  scanKTP: string;
 };
 
 type Order = {
@@ -53,6 +54,7 @@ type Order = {
   buktiTf: string;
   provinsiSekolah: string;
   suratRekomendasi: string;
+  updated_at: string;
 };
 
 export type Peserta = {

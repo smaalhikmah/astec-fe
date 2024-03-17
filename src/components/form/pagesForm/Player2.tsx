@@ -480,6 +480,22 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
               {pembimbing.fields.map((field, index) => (
                 <div key={index}>
                   <p className='h3 pt-4'>Data diri Pembimbing {index + 1}</p>
+
+                  <FormField
+                    control={form.control}
+                    name={`pembimbing.${index}.nomorIdentitas`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>NONOR KTP {index + 1}</FormLabel>
+                        <FormDescription />
+                        <FormControl>
+                          <Input placeholder='NOMOR KTP...' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <FormField
                     control={form.control}
                     name={`pembimbing.${index}.nama`}
@@ -508,6 +524,43 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                       </FormItem>
                     )}
                   />
+
+                  <FormField
+                    control={form.control}
+                    name={`pembimbing.${index}.scanKTP`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Upload Scan KTP </FormLabel>
+                        {form.getValues(`pembimbing.${index}.scanKTP.file`) ? (
+                          <ImagePreview
+                            url={URL.createObjectURL(
+                              form.getValues(
+                                `pembimbing.${index}.scanKTP.file`,
+                              ) as File,
+                            )}
+                            onDelete={() =>
+                              deleteImage(`pembimbing.${index}.scanKTP`, form)
+                            }
+                          />
+                        ) : (
+                          <div className='flex items-center justify-between'>
+                            <div className='p-3 bg-slate-200  justify-center items-center flex'>
+                              <FaImage size={40} />
+                            </div>
+                          </div>
+                        )}
+                        <FormControl>
+                          <InputImage
+                            form={form}
+                            field={{
+                              ...field,
+                              name: `pembimbing.${index}.scanKTP`,
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                 </div>
               ))}
               <div className='flex justify-between'>
@@ -517,6 +570,11 @@ export default function Player2({ max, official, lomba, harga }: Player2Props) {
                       pembimbing.append({
                         nama: '',
                         email: '',
+                        nomorIdentitas: '',
+                        scanKTP: {
+                          file: null,
+                          url: '',
+                        },
                       });
                     }}
                   >

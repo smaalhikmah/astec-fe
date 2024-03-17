@@ -1,4 +1,4 @@
-import { FaUser, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa';
+import { FaShoppingCart, FaSignOutAlt, FaHistory } from 'react-icons/fa';
 import Link from 'next/link';
 import ThemeButton from '../button/ThemeButton';
 import toast from 'react-hot-toast';
@@ -8,6 +8,8 @@ import useAdminStore from '@/store/useAdminStore';
 import { FileSpreadsheet } from 'lucide-react';
 import api from '@/lib/axios-helper';
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
+import { FaFilm } from 'react-icons/fa6';
+import { MdOutlineSportsBasketball } from 'react-icons/md';
 
 export type IconsTypeList = keyof typeof icons;
 export default adminWithAuth(Sidebar, 'optional');
@@ -46,6 +48,8 @@ function Sidebar() {
     );
   }
 
+  const path = router.pathname;
+
   return (
     <div className='min-h-screen flex flex-row '>
       <div className='flex flex-col w-56rounded-r-3xl overflow-hidden'>
@@ -60,21 +64,32 @@ function Sidebar() {
               const current = icons[icon as IconsTypeList];
               return (
                 <li key={`${href}${label}`}>
-                  <Link
-                    href={href}
-                    passHref
-                    legacyBehavior
-                    className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'
-                  >
-                    <>
-                      <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
-                        <current.icon />
-                      </span>
-                      <a href={href} className='text-sm font-medium'>
-                        {label}
-                      </a>
-                    </>
-                  </Link>
+                  <div className='transform hover:translate-x-2 transition-transform ease-in duration-200'>
+                    <Link
+                      href={href}
+                      passHref
+                      legacyBehavior
+                      className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'
+                    >
+                      <>
+                        <span
+                          className={`inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400 ${
+                            path === href ? 'text-indigo-500' : ''
+                          }`}
+                        >
+                          <current.icon />
+                        </span>
+                        <a
+                          href={href}
+                          className={`text-sm font-medium ${
+                            path === href ? 'text-indigo-500' : ''
+                          }`}
+                        >
+                          {label}
+                        </a>
+                      </>
+                    </Link>
+                  </div>
                 </li>
               );
             })}
@@ -84,7 +99,7 @@ function Sidebar() {
                 className='flex cursor-pointer flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'
               >
                 <>
-                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
+                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-green-500'>
                     <FileSpreadsheet />
                   </span>
                   <span className='text-sm font-medium'>Download</span>
@@ -109,13 +124,25 @@ function Sidebar() {
 
 const links = [
   { href: '/admin', label: 'Competition', icon: 'user' },
-  { href: '/admin/talkshow', label: 'Talkshow', icon: 'order' },
+  { href: '/admin/talkshow', label: 'Film Talk', icon: 'order' },
+  { href: '/admin/history', label: 'Competition History', icon: 'history' },
+  {
+    href: '/admin/history/filmtalk',
+    label: 'Film Talk History',
+    icon: 'filmhistory',
+  },
 ];
 const icons = {
   user: {
-    icon: FaUser,
+    icon: MdOutlineSportsBasketball,
   },
   order: {
     icon: FaShoppingCart,
+  },
+  history: {
+    icon: FaHistory,
+  },
+  filmhistory: {
+    icon: FaFilm,
   },
 };

@@ -54,6 +54,8 @@ export const step2 = z.object({
 });
 
 export const pembimbing = z.object({
+  nomorIdentitas: z.string().regex(phoneRegex, 'Masa kek gitu'),
+  scanKTP: foto,
   nama: z.string().min(2, {
     message: 'Nama wajib diisi',
   }),

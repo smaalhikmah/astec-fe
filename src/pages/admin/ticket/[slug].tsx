@@ -81,19 +81,22 @@ function Index() {
                   <div>
                     <p className='h2'>
                       Status:{' '}
-                      <span className='text-red-600'>
-                        {dataUser.updatedAt
-                          ? 'Sudah di setujui'
-                          : 'Belum di setujui'}
+                      <span>
+                        {dataUser.order.updated_at
+                          ? 'Sudah disetujui'
+                          : 'Belum disetujui'}
                       </span>
                     </p>
-                    <Alert
-                      onclick={() => approved(slug as string)}
-                      placeholder='Setujui'
-                      message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
-                      variant='default'
-                      className='bg-green-500 hover:bg-green-600'
-                    />
+
+                    {!dataUser.order.updated_at && (
+                      <Alert
+                        onclick={() => approved(slug as string)}
+                        placeholder='Setujui'
+                        message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+                        variant='default'
+                        className='bg-green-500 hover:bg-green-600'
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -168,12 +171,27 @@ function Index() {
                                 </AccordionTrigger>
                                 <AccordionContent>
                                   <div>
+                                    <p className='h4'>Nomor Identitas</p>
+                                    <Input
+                                      disabled
+                                      value={mentor.nomorIdentitas}
+                                    />
+                                  </div>
+                                  <div>
                                     <p className='h4'>Nama Pembimbing</p>
                                     <Input disabled value={mentor.name} />
                                   </div>
                                   <div>
                                     <p className='h4'>Email Pembimbing</p>
                                     <Input disabled value={mentor.email} />
+                                  </div>
+                                  <div>
+                                    <p className='h4'>Scan KTP</p>
+                                    <ImagePreview
+                                      open={open}
+                                      setOpen={setOpen}
+                                      url={mentor.scanKTP}
+                                    />
                                   </div>
                                 </AccordionContent>
                               </AccordionItem>

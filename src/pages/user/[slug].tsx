@@ -172,12 +172,27 @@ function Index() {
                                 </AccordionTrigger>
                                 <AccordionContent>
                                   <div>
+                                    <p className='h4'>Nomor Identitas</p>
+                                    <Input
+                                      disabled
+                                      value={mentor.nomorIdentitas}
+                                    />
+                                  </div>
+                                  <div>
                                     <p className='h4'>Nama Pembimbing</p>
                                     <Input disabled value={mentor.name} />
                                   </div>
                                   <div>
                                     <p className='h4'>Email Pembimbing</p>
                                     <Input disabled value={mentor.email} />
+                                  </div>
+                                  <div>
+                                    <p className='h4'>Scan KTP</p>
+                                    <ImagePreview
+                                      open={open}
+                                      setOpen={setOpen}
+                                      url={mentor.scanKTP}
+                                    />
                                   </div>
                                 </AccordionContent>
                               </AccordionItem>

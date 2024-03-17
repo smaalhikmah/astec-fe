@@ -86,13 +86,15 @@ export const UserDataColumn: ColumnDef<UserData>[] = [
             </Button>
           </Link>
 
-          <Alert
-            onclick={() => approved(row.original.id)}
-            placeholder='Setujui'
-            message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
-            variant='default'
-            className='bg-green-500 hover:bg-green-600'
-          />
+          {!row.original.approved && (
+            <Alert
+              onclick={() => approved(row.original.id)}
+              placeholder='Setujui'
+              message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+              variant='default'
+              className='bg-green-500 hover:bg-green-600'
+            />
+          )}
         </div>
       );
     },

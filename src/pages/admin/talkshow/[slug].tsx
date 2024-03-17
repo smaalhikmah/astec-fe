@@ -1,7 +1,9 @@
 import Seo from '@/components/Seo';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import ImagePreview from '@/components/admin/ImagePreview';
+import Alert from '@/components/button/Alert';
 import adminWithAuth from '@/components/hoc/adminWithAuth';
+import { approvedTalkshow } from '@/components/table/TalkshowDataColumn';
 import {
   Accordion,
   AccordionContent,
@@ -52,12 +54,30 @@ function Index() {
 
                 <div className='flex justify-between'>
                   <div>
+                    <p className='h2'></p>
+                  </div>
+                  <div>
                     <p className='h2'>
-                      Status: <span className='text-red-600'>Pending</span>
+                      Status:{' '}
+                      <span className=''>
+                        {dataUser.order.approved
+                          ? 'Sudah disetujui'
+                          : 'Belum disetujui'}
+                      </span>
                     </p>
+
+                    {!dataUser.order.approved && (
+                      <Alert
+                        onclick={() => approvedTalkshow(slug as string)}
+                        placeholder='Setujui'
+                        message='Tindakan ini tidak dapat dibatalkan,pastikan semua data sudah benar'
+                        variant='default'
+                        className='bg-green-500 hover:bg-green-600'
+                      />
+                    )}
                   </div>
                 </div>
-                <div>
+                <div className='space-y-4'>
                   <p className='h2'>Bukti Pembayaran</p>
                   <ImagePreview url={dataUser.order.buktiTf} />
                 </div>
