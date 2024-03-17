@@ -22,7 +22,7 @@ export default function Cards<T extends Competition>({ data }: Props<T>) {
     <div className='md:w-[350px] md:h-[550px] h-[450px] w-[300px] rounded-lg overflow-hidden'>
       <Card>
         <CardHeader className='h-60 max-h-60 md:h-72 md:max-h-72 overflow-hidden flex flex-col justify-between'>
-          <div className='w-full h-52'>
+          <div className='w-full h-40 md:h52'>
             <Image
               src={data.image}
               alt='hero'
