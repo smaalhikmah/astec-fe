@@ -60,7 +60,9 @@ function Index() {
                 {competition.grade}
               </p>
               <p className='text-sm text-gray-600 dark:text-gray-300'>
-                {competition.participants} Orang/Team
+                {competition.participants > 1
+                  ? `${competition.participants} Orang/Team`
+                  : 'Individu'}
               </p>
 
               <hr className='mt-4 dark:border-gray-600' />

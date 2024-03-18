@@ -169,7 +169,7 @@ export const CompetitionData = [
     description:
       'Bersiaplah untuk menginspirasi dan mempengaruhi! Lomba pidato bahasa Inggris kami adalah panggung bagi kamu untuk memancarkan keberanian dan kreativitas. Tunjukkan kepemimpinanmu, sampaikan ide-idemu dengan penuh semangat, dan rebut perhatian para juri. Bergabunglah sekarang dan jadilah suara yang membawa perubahan!',
     prize: '',
-    participants: 3,
+    participants: 1,
     official: false,
     path: '/competition/english-speech',
     images: [
