@@ -73,7 +73,7 @@ function Index() {
                   <p className='mt-2 text-sm text-gray-600 dark:text-gray-300 text-justify break-all'>
                     {competition.description}
                   </p>
-                  <div className='grid md:grid-cols-3 gap-y-4 md:gap-y-0 justify-center'>
+                  <div className='grid md:grid-cols-3 gap-y-4 justify-center'>
                     {competition.images.map((image, index) => {
                       return (
                         <Image
